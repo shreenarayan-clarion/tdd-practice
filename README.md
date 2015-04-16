@@ -5,4 +5,6 @@ Add your rails application with your folder name.
       tdd-practice
          arvind
             my-rails-app
- Generate pull request.
+ 
+ 
+ Then generate pull request.
