@@ -47,6 +47,9 @@ group :development, :test do
 
   # TDD/BDD factory girl
   gem 'factory_girl_rails'
+
+  # debugger
+  gem 'pry'
 end
 
 group :test do

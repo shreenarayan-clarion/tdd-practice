@@ -23,7 +23,7 @@ describe PostsController do
   # This should return the minimal set of attributes required to create a valid
   # Post. As you add validations to Post, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { {  } }
+  let(:valid_attributes) { {title: 'MyString', content: 'MyText MyText MyText'} }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -85,14 +85,14 @@ describe PostsController do
       it "assigns a newly created but unsaved post as @post" do
         # Trigger the behavior that occurs when invalid params are submitted
         Post.any_instance.stub(:save).and_return(false)
-        post :create, {:post => {  }}, valid_session
+        post :create, {:post => { title: '', content: 'MyText MyText MyText' }}, valid_session
         assigns(:post).should be_a_new(Post)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Post.any_instance.stub(:save).and_return(false)
-        post :create, {:post => {  }}, valid_session
+        post :create, {:post => { title: '', content: '' }}, valid_session
         response.should render_template("new")
       end
     end
@@ -106,8 +106,8 @@ describe PostsController do
         # specifies that the Post created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Post.any_instance.should_receive(:update).with({ "these" => "params" })
-        put :update, {:id => post.to_param, :post => { "these" => "params" }}, valid_session
+        Post.any_instance.should_receive(:update).with({ "title" => "params" })
+        put :update, {:id => post.to_param, :post => { "title" => "params" }}, valid_session
       end
 
       it "assigns the requested post as @post" do
@@ -126,9 +126,10 @@ describe PostsController do
     describe "with invalid params" do
       it "assigns the post as @post" do
         post = Post.create! valid_attributes
+        # binding.pry
         # Trigger the behavior that occurs when invalid params are submitted
         Post.any_instance.stub(:save).and_return(false)
-        put :update, {:id => post.to_param, :post => {  }}, valid_session
+        put :update, {:id => post.to_param, :post => { title: 'MyS', content: 'MyText MyText MyText' }}, valid_session
         assigns(:post).should eq(post)
       end
 
@@ -136,7 +137,7 @@ describe PostsController do
         post = Post.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Post.any_instance.stub(:save).and_return(false)
-        put :update, {:id => post.to_param, :post => {  }}, valid_session
+        put :update, {:id => post.to_param, :post => { title: 'MyString', content: 'MyText MyText MyText' }}, valid_session
         response.should render_template("edit")
       end
     end
@@ -156,5 +157,4 @@ describe PostsController do
       response.should redirect_to(posts_url)
     end
   end
-
 end
