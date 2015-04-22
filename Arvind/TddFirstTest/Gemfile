@@ -43,3 +43,14 @@ group :development, :test do
   gem 'spring'
 end
 
+group :test do
+  gem 'guard-minitest',     '2.3.1'
+  gem 'spork-rails'
+  gem 'guard-spork'
+  gem 'childprocess'
+  gem 'simplecov', :require => false
+  gem 'rspec-rails'
+  gem 'capybara', '>=2.2.0.beta'
+  gem 'factory_girl_rails'
+end
+
