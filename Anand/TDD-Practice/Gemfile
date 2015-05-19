@@ -45,7 +45,9 @@ group :test do
   gem 'fuubar'
   gem "codeclimate-test-reporter"
   gem 'simplecov', :require => false
-
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 group :development, :test do
