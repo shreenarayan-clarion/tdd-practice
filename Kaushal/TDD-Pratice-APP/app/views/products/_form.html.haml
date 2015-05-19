@@ -1,0 +1,10 @@
+= bootstrap_form_for(@product, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-5") do |f|
+  = f.hidden_field :admin_id, value: current_admin.id
+  = f.text_field :name, :autofocus => true
+  = f.text_field :base_price
+  = f.text_field :shopify_product_id
+  = f.text_field :description
+  = f.text_field :image
+  = f.check_box :active
+  = f.submit 'Save', class: 'btn btn-default', data: {disable_with: 'Save'}
+  = link_to 'Back', products_path, class: 'btn btn-default'

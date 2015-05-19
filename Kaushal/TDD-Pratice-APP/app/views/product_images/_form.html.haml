@@ -1,0 +1,10 @@
+- url = @product_image.try(:id).present? ? product_product_image_path(@product, @product_image) : product_product_images_path(@product)
+= bootstrap_form_for(@product_image, url: url, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-5", html: { multipart: true }) do |f|
+  - if @product.blank?
+    = f.grouped_collection_select :product_id, Product.parent_products, :components, :name, :id, :name
+  - else
+    = f.hidden_field :product_id, value: @product.id
+  = f.file_field :image
+  = f.select :category_id, Category.all.map{|s| [s.name, s.id]}, prompt: 'Please Select Category'
+  = f.submit 'Save', class: 'btn btn-default', data: {disable_with: 'Save'}
+  = link_to 'Back', product_product_images_path(@product), class: 'btn btn-default'

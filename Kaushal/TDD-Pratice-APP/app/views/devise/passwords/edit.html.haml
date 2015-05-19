@@ -1,0 +1,8 @@
+.border-form-div.password-reset-form-div
+  %h2
+    Change your password
+  = bootstrap_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => {:class => 'form-horizontal', method: :put}, layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-2") do |f|
+    = f.hidden_field :reset_password_token
+    = f.password_field :password, autofocus: true, autocomplete: "off"
+    = f.password_field :password_confirmation, autocomplete: "off"
+    = f.submit "Change my password", class:'btn btn-primary', data: {disable_with: "Change my password"}
