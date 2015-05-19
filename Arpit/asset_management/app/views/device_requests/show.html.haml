@@ -1,0 +1,36 @@
+%h3 Device Request Details
+
+%table.width-100
+  %tr
+    %th 
+      Date:
+    %td
+      = @device_request.on_date.try(:to_s, "%b %d, %Y")
+  %tr
+    %th
+      Vendors:
+    %td
+      = @device_request.vendors.uniq.map(&:name).join(', ')
+  %tr
+    %th 
+      Attachment:
+    %td
+      = link_to "#{@device_request.uploads.try(:first).try(:attachment_file_name)}", download_path(id: @device_request.uploads.try(:first).try(:id))
+%br
+%table.table.table-striped.table-bordered
+  %thead
+    %th Device Category
+    %th Quantity
+    %th Title
+    %th Description
+  %tbody
+    - @device_request.requested_transactions.each do |t|
+      %tr
+        %td= t.device_category.try(:name)
+        %td= t.request_quantity
+        %td= t.request_title
+        %td= t.request_description
+%br
+= link_to '<span class="glyphicon glyphicon-pencil "></span> Edit'.html_safe, edit_device_request_path(@device_request), class: "btn btn-success" if @device_request.edit?
+= link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, device_requests_path, class: "btn btn-primary"
+

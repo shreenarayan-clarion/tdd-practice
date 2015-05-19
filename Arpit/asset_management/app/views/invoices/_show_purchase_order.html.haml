@@ -1,0 +1,31 @@
+
+- @purchase_transacations.each do |transaction|
+	.row
+		%fieldset
+			%legend
+			.col-md-5
+				.form-group
+					%label.control-label.col-sm-4{:for => ""} 
+						Title
+						%span.required
+					.col-sm-7
+						= text_field_tag "purchase_orders[#{transaction.id}][invoice_title]" , transaction.invoice_title, data: {'rule-required' => true,  'rule-maxlength' => 35, 'msg-maxlength' => "Maximum 35 characters", 'title' => "Maximum 35 characters", 'rule-validName' => true }, class: "input_tooltip form-control",maxlength: 35
+				.form-group
+					%label.control-label.col-sm-4{:for => ""} 
+						Qantity
+						%span.required
+					.col-sm-7
+						= text_field_tag "purchase_orders[#{transaction.id}][invoice_quantity]" , transaction.invoice_quantity, data: {'rule-required' => true, 'rule-number' => true,'rule-RealNumber'=> true, 'msg-maxlength' => "Maximum 5 characters", 'title' => "Maximum 5 characters"}, class: "input_tooltip form-control" ,maxlength: 5
+				.form-group
+					%label.control-label.col-sm-4{:for => ""} 
+						Per Unit Price
+						%span.required
+					.col-sm-7
+						= text_field_tag "purchase_orders[#{transaction.id}][invoice_price]" , transaction.invoice_price, data: {'rule-required' => true, 'rule-number' => true, 'msg-maxlength' => "Maximum 14 characters", 'title' => "Maximum 14 characters"}, class: "input_tooltip form-control" ,maxlength: 14
+			.col-md-5
+				.form-group
+					%label.control-label.col-sm-4{:for => ""} 
+						Description
+						%span.required
+					.col-sm-7
+						= text_area_tag "purchase_orders[#{transaction.id}][invoice_description]" , transaction.invoice_description, data: {'rule-required' => true, 'msg-maxlength' => "Maximum 14 characters", 'title' => "Maximum 14 characters"}, class: " form-control", style: "height:140px",maxlength: 255

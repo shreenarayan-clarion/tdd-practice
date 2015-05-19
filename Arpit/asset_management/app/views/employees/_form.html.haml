@@ -1,0 +1,51 @@
+// This is a bootstraped form for the employees which will generate bootstarp 
+= bootstrap_form_for @employee ,layout: :horizontal, label_col: "col-sm-3",control_col: "col-sm-6", html: { class: 'validate-form' }  do |f|
+  %table.width-100
+    %tr
+      %td
+        = f.text_field :first_name, data: { 'rule-required' => true, 'rule-maxlength' => 35 ,'msg-maxlength'=> "Maximum 35 characters", 'title' => "Maximum 35 characters", 'rule-validName' => true }, class: "input_tooltip", :label=> "First Name<span class='required'/>".html_safe , maxlength: 35
+      %td
+        = f.text_field :last_name, data: { 'rule-required' => true , 'rule-maxlength' => 35 ,'msg-maxlength'=> "Maximum 35 characters", 'title' => "Maximum 35 characters", 'rule-validName' => true }, class: "input_tooltip", :label=> "Last Name<span class='required'/>".html_safe, maxlength: 35
+    %tr
+      %td
+        = f.text_field :email, data: { 'rule-required' => true, 'rule-email'=>true,'msg-email'=>"Please enter a valid email"}, :label=> "Email<span class='required'/>".html_safe
+      %td
+        = f.text_field :employee_number, data: { 'rule-required' => true ,'rule-number' => true, 'rule-maxlength' => 5 ,'msg-maxlength'=> "Maximum 5 characters", 'title' => "Maximum 5 characters" }, class: "input_tooltip", :label=> "Employee Id<span class='required'/>".html_safe , maxlength: 5
+    %tr
+      %td
+        = f.collection_select :designation, DESIGNATIONS, :to_s, :to_s, {include_blank: 'Select Designation', :label => "Designation<span class='required'/>".html_safe}, data: { 'rule-required' => true }
+
+      %td
+        = f.collection_select :technology, TECHNOLOGIES, :to_s, :to_s, {include_blank: 'Select Technology', :label => "Technology<span class='required'/>".html_safe}, data: { 'rule-required' => true }
+    %tr
+      %td
+        = f.collection_select :department, DEPARTMENTS, :to_s, :to_s, {include_blank: 'Select Department', :label => "Department<span class='required'/>".html_safe}, data: { 'rule-required' => true }
+      %td
+        = f.collection_select :branch_id, Branch.active, :id, :name, {include_blank: 'Select Branch', :label => "Branch<span class='required'/>".html_safe}, data: { 'rule-required' => true }
+        
+    %tr
+      %td
+        = f.text_field :join_date, placeholder: 'dd/mm/yyyy',  data: {'date-format' =>"DD/MM/YYYY", 'rule-required' => true ,'rule-dateFormat' => true}, :label=> "Join Date<span class='required'/>".html_safe, value: f.object.try(:join_date).try(:strftime,"%d/%m/%Y")
+      %td
+        = f.text_field :resign_date, placeholder: 'dd/mm/yyyy',  data: {'date-format' =>"DD/MM/YYYY", 'rule-dateFormat' => true}, :label=> "Resign Date".html_safe, value: f.object.try(:resign_date).try(:strftime,"%d/%m/%Y")
+    %tr
+      %td
+        = f.text_field :skype_id, data: { 'rule-maxlength' => 50 ,'msg-maxlength'=> "Maximum 50 characters", 'title' => "Maximum 50 characters" }, class: "input_tooltip", maxlength: 50
+      %td
+        = f.text_field :pm_tool_id, label:"PM Tool", data: { 'rule-maxlength' => 50 ,'msg-maxlength'=> "Maximum 50 characters", 'title' => "Maximum 50 characters" }, class: "input_tooltip", maxlength: 50
+    %tr
+      %td
+        = f.text_field :pandian_id, data: { 'rule-maxlength' => 50 ,'msg-maxlength'=> "Maximum 50 characters", 'title' => "Maximum 50 characters" }, class: "input_tooltip", maxlength: 50
+      %td
+        = f.text_field :wiki_id, data: { 'rule-maxlength' => 50 ,'msg-maxlength'=> "Maximum 50 characters", 'title' => "Maximum 50 characters" }, class: "input_tooltip", maxlength: 50
+    %tr
+      %td
+        = f.text_field :sapience_id, data: { 'rule-maxlength' => 50 ,'msg-maxlength'=> "Maximum 50 characters", 'title' => "Maximum 50 characters" }, class: "input_tooltip", maxlength: 50
+      %td
+        = f.text_field :helpdesk_id, data: { 'rule-maxlength' => 50 ,'msg-maxlength'=> "Maximum 50 characters", 'title' => "Maximum 50 characters" }, class: "input_tooltip", maxlength: 50
+  = f.button(type: 'submit', class: "btn btn-success") do
+    %i{ class: "glyphicon glyphicon-ok" }
+    Save
+  = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, employees_path, class: "btn btn-primary"
+
+

@@ -1,0 +1,7 @@
+= bootstrap_form_for @branch, layout: :horizontal, control_col: "col-sm-3", html: { class: 'validate-form' }do |f|
+  = f.text_field :name, data: { 'rule-required' => true, 'rule-maxlength' => 35, 'msg-maxlength' => "Maximum 35 characters", title: "Maximum 35 characters", 'rule-validName' => true }, class: "input_tooltip", label: "Name <span class='required'/>".html_safe, maxlength: 35
+  =# f.collection_select :parent_id, Branch.all.where.not(id: @branch.id), :id, :name, prompt: 'Please Select'
+  = f.button(type: 'submit', class: "btn btn-success") do
+    %i{ class: "glyphicon glyphicon-ok" }
+    Save
+  = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, branches_path, class: "btn btn-primary"

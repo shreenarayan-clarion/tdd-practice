@@ -1,0 +1,48 @@
+%h3 Vendor Details
+
+%table.width-100
+  %tr
+    %th
+      Name:
+    %td
+      = @vendor.name
+    %th
+      Email:
+    %td
+      = @vendor.email
+  %tr
+    %th
+      City:
+    %td
+      = @vendor.city
+    %th
+      State:
+    %td
+      = @vendor.state
+  %tr
+    %th
+      Primary Number:
+    %td
+      = @vendor.contact_number
+    %th
+      Fax Number:
+    %td
+      = format_value(@vendor.fax_number)
+  %tr
+    %th
+      Secondary Number:
+    %td
+      = format_value(@vendor.mobile_number)
+    %th
+      Website:
+    %td
+      = link_to format_value(@vendor.website), format_value(@vendor.website), target: "_blank"
+  %tr
+    %th
+      Address:
+    %td
+      = @vendor.address
+%br
+= link_to '<span class="glyphicon glyphicon-pencil "></span> Edit'.html_safe, edit_vendor_path(@vendor), class: "btn btn-success" if @vendor.active?
+= link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, vendors_path, class: "btn btn-primary"
+

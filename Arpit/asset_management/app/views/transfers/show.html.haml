@@ -1,0 +1,31 @@
+%h3 #{@transfer.transferable_type} Transfer Details
+
+%table.width-100
+  %tr
+    %th
+      From Location:
+    %td
+      = @transfer.from_location.try(:name)
+  %tr
+    %th
+      To Location:
+    %td
+      = @transfer.to_location.try(:name)
+  %tr
+    %th
+      Transfered:
+    %td
+      = @transfer.transferable.name
+  %tr
+    %th
+      Transfered Date:
+    %td
+      = @transfer.transfer_date.try(:strftime,"%b %d, %Y")
+  %tr
+    %th
+      Transfered By:
+    %td
+      = @transfer.transferee.try(:name)
+%br
+= link_to '<span class="glyphicon glyphicon-pencil "></span> Edit'.html_safe, edit_transfer_path(@transfer), class: "btn btn-primary" if @transfer.active?
+= link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, transfers_path(:resource => @transfer.transferable_type), class: "btn btn-success"

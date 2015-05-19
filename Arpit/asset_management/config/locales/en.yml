@@ -1,0 +1,135 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  page_title:
+    devices:
+      index: 'Devices'
+      new: 'New Device'
+      create: 'New Device'
+      edit: 'Edit Device'
+      update: 'Save Device'
+      show: 'View Device'
+      assignment: 'Device Assignment'
+    device_categories:
+      index: 'Devices Categories'
+      new: 'New Device Category'
+      create: 'New Device Category'
+      edit: 'Edit Device Category'
+      update: 'Save Device Category'
+      show: 'View Device Category'
+    device_assignments:
+      index: 'Devices Assignments'
+      new: 'New Devices Assignment'
+      create: 'New Devices Assignment'
+      edit: 'Edit Devices Assignment'
+      update: 'Save Devices Assignment'
+      show: 'View Devices Assignment'
+    sessions:
+      new: 'User Login'
+    passwords:
+      new: 'Forgot Password'
+      create: 'Forgot Password'
+      edit: 'Change Password'
+      update: 'Change Password'
+    registrations:
+      new: 'Create an Account'
+      create: 'Create an Account'
+      edit: 'Account Settings '
+    users:
+      index: 'Users'
+      new: 'New User'
+      create: 'New User'
+      edit: 'Edit User'
+      update: 'Save User'
+      show: 'View User'
+    employees:
+      index: 'Employees'
+      new: 'New Employee'
+      create: 'New Employee'
+      edit: 'Edit Employee'
+      update: 'Save Employee'
+      show: 'View Employee'
+    vendors:
+      index: 'Vendors'
+      new: 'New Vendor'
+      create: 'New Vendor'
+      edit: 'Edit Vendor'
+      update: 'Save Vendor'
+      show: 'View Vendor'
+    clients:
+      index: 'Clients'
+      new: 'New Client'
+      create: 'New Client'
+      edit: 'Edit Client'
+      update: 'Save Client'
+      show: 'View Client'
+    branches:
+      index: 'Branches'
+      new: 'New Branch'
+      create: 'New Branch'
+      edit: 'Edit Branch'
+      update: 'Save Branch'
+      show: 'View Branch'
+    software_products:
+      index: 'Software Products'
+      new: 'New Software Product'
+      create: 'New Software Product'
+      edit: 'Edit Software Product'
+      update: 'Save Software Product'
+      show: 'View Software Product'
+    transfers:
+      index: 'Transfers'
+      new: 'New Transfers'
+      create: 'New Transfers'
+      edit: 'Edit Transfers'
+      update: 'Save Transfers'
+      show: 'View Transfers'
+    device_requests:
+      index: 'Device Requests'
+      new: 'New Device Requests'
+      create: 'New Device Requests'
+      edit: 'Edit Device Requests'
+      update: 'Save Device Requests'
+      show: 'View Device Requests'
+    quotations:
+      index: 'Quotations'
+      new: 'New Quotation'
+      create: 'New Quotation'
+      edit: 'Edit Quotation'
+      update: 'Save Quotation'
+      show: 'View Quotation'
+    invoices:
+      index: 'Invoices'
+      new: 'New Invoice'
+      create: 'New Invoice'
+      edit: 'Edit Invoice'
+      update: 'Save Invoice'
+      show: 'View Invoice'
+    purchase_orders:
+      index: 'Purchase Order'
+      new: 'New Purchase Order'
+      create: 'New Purchase Order'
+      edit: 'Edit Purchase Order'
+      update: 'Save Purchase Order'
+      show: 'View Purchase Order'
+    welcome:
+      index: 'Assets Management'

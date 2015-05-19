@@ -1,0 +1,44 @@
+= bootstrap_nested_form_for @device_request, layout: :horizontal, control_col: "col-sm-7",label_col: "col-sm-4", html: { class: 'validate-form' }  do |f|
+  .row
+    .col-md-5
+      = f.collection_select :vendor_ids, Vendor.all, :id, :name, {label: "Vendor <span class='required'/>".html_safe},{ multiple: true, class: 'multiselect', data: {'rule-required' => true }}
+    .col-md-5
+      = f.text_field :on_date, placeholder: 'dd/mm/yyyy', data: { 'date-format' =>"DD/MM/YYYY", 'behaviour' => 'no-future-datetimepicker', 'rule-dateFormat' => true, 'rule-required' => true}, label: "Date <span class='required'/>".html_safe
+  .row
+    .col-md-5
+      .form-group
+        %label.control-label.col-sm-4{:for => ""} Size
+        .col-sm-2
+          = link_to '<span class="glyphicon glyphicon-minus-sign"></span>'.html_safe,"javascript:void(0)", class: "btn btn-danger",style:'height:33px',id: "remove-device" ,:disabled=> "disabled", :data => { :target => "#device_transactions" }
+        .col-sm-3
+          %input#size.form-control.input_tooltip.text-center{:name => "size", :size => "3", :title => "", :type => "text", :value=> @requested_transactions.try(:size)||1, :disabled=> true,'data-rule-validateMaxDevice' => true}
+        .col-sm-2
+          = f.link_to_add '<span class="glyphicon glyphicon-plus-sign"></span>'.html_safe, :requested_transactions, :data => { :target => "#requested_transactions" }, class: "btn btn-primary nested-add",style:'height:33px'
+    .col-md-5
+      = f.fields_for :uploads,@uploads, :wrapper => false do |attachment_form|
+        = attachment_form.file_field :attachment ,accept: ".pdf"
+        =# link_to "","#", class: "glyphicon glyphicon-minus-sign delete-link nested-remove"
+      .text-right
+        = link_to "#{@device_request.uploads.try(:first).try(:attachment_file_name)}", download_path(id: @device_request.uploads.try(:first).try(:id))           
+
+  #requested_transactions
+    = f.fields_for :requested_transactions, @requested_transactions, :wrapper => false do |t|
+      .row.nested_div
+        %fieldset
+          %legend
+          .col-md-5
+            = t.text_field :request_title, placeholder: 'Title', label: "Title<span class='required'/>".html_safe, data: { 'rule-uniqeName' => 'title', 'rule-required' => true, 'rule-maxlength' => 35, 'msg-maxlength' => "Maximum 35 characters", 'title' => "Maximum 35 characters", 'rule-validName' => true }, class: "input_tooltip", maxlength: 35
+
+            = t.collection_select :device_category_id, DeviceCategory.all, :id, :name, {label: "Category<span class='required'/>".html_safe, include_blank: 'Select Device Category'},data: {'rule-required' => true }
+            = t.text_field :request_quantity, placeholder: 'Quantity', label: "Quantity <span class='required'/>".html_safe, data: { 'rule-required' => true ,'rule-number' => true, 'rule-maxlength' => 3 ,'msg-maxlength'=> "Maximum 3 digits", 'title' => "Maximum 3 digits" }, class: "input_tooltip", maxlength: 3
+          .col-md-5
+            = t.text_area :request_description, style: "height:140px", placeholder: 'Description',label: "Description<span class='required'/>".html_safe, data: {'rule-required' => true, 'rule-maxlength' => 255, 'msg-maxlength' => "Maximum 255 characters", title: "Maximum 255 characters" }, class: "input_tooltip", maxlength: 255
+          %div{class: "col-md-2 padding-top15 #{(@device_transactions.try(:size)||1) < 2 ? 'hide' : ''}"}
+            = t.link_to_remove "", class: "glyphicon glyphicon-minus-sign delete-link nested-remove"
+  .row
+    %fieldset
+      %legend
+      = f.button(type: 'submit', class: "btn btn-success") do
+        %i{ class: "glyphicon glyphicon-ok" }
+        Save
+      = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, device_requests_path, class: "btn btn-primary"

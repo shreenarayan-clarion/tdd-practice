@@ -1,0 +1,3 @@
+- if ele.uploads.first.present? &&ele.uploads.first.attachment_file_name.present?
+  = link_to "#{ele.uploads.try(:first).try(:attachment_file_name)}", download_path(id: ele.uploads.try(:first).try(:id)) ,class: 'download-link'           
+  =# link_to "", download_path(id: ele.uploads.try(:first).try(:id)),class:"glyphicon glyphicon-minus-sign delete-link download-link",remote: true,id: ''

@@ -1,0 +1,53 @@
+%h3 Purchase Order Detail
+
+%table.width-100
+  %tr
+    %th Identifier:
+    %td= @purchase_order.identifier
+  %tr
+    %th Date:
+    %td= @purchase_order.on_date.try(:to_s, "%b %d, %Y")
+  %tr
+    %th Quotation:
+    %td= @purchase_order.quotation.try(&:identifier)
+  %tr
+    %th Vendor:
+    %td= @purchase_order.vendors.uniq.map(&:name).join(', ')
+  %tr
+    %th Attchment:
+    %td= link_to "#{@purchase_order.uploads.try(:first).try(:attachment_file_name)}", download_path(id: @purchase_order.uploads.try(:first).try(:id))
+
+%br
+%table.table.table-striped.table-bordered
+  %thead
+    %th Device Category
+    %th Title
+    %th Description
+    %th Quantity
+    %th 
+      Price
+      %small (per unit)
+    %th Total
+  %tbody
+    - total = 0
+    - @purchase_order.device_transactions.each do |t|
+      %tr
+        %td= t.device_category.try(:name)
+        %td= t.purchase_title
+        %td= t.purchase_description
+        %td= t.purchase_quantity
+        %td= t.purchase_price
+        %td.text-right
+          %b
+            = t.purchase_subtotal
+            - total += t.purchase_subtotal
+  %tr
+    %td
+      %b Total
+    %td.text-right{colspan: 5}
+      %b
+        = total
+%br
+- if @purchase_order.edit?
+  = link_to '<span class="glyphicon glyphicon-pencil "></span> Edit'.html_safe, edit_purchase_order_path(@purchase_order), class: "btn btn-success" if @purchase_order.active?
+= link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, purchase_orders_path, class: "btn btn-primary"

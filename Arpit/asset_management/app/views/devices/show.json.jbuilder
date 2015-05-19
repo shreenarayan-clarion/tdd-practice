@@ -1,0 +1,1 @@
+json.extract! @device, :id, :invoice_id, :vendor_id, :serial_number, :model_number, :ip_address, :status, :status_date, :branch_id, :warranty, :provider, :client_name, :devices_category_id, :parent_id, :employee_id, :deleted_at, :created_at, :updated_at

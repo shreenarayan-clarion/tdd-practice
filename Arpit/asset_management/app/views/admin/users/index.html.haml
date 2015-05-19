@@ -1,0 +1,34 @@
+%h3="#{deleted_helper} Users"
+
+%table#data_table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Email
+      %th Name
+      %th.span6 Login Count
+      %th.span6 Last Login
+      %th.span6 Created Date
+      = deleted_on_th
+      = actions_th
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= link_to user.email, admin_user_path(user)
+        %td= user.employee.try(:name)
+        %td.span-6= user.sign_in_count
+        %td.span-6= custom_time_ago_in_words(user.last_sign_in_at)
+        %td.span-6= user.created_at.to_s("%b %d, %Y")
+        = deleted_at(user)
+        %td.text-center
+          - unless params[:deleted]
+            = link_to '', admin_user_path(user), class: "glyphicon glyphicon-eye-open show-link", title: "Show"
+            = link_to '', edit_admin_user_path(user), class: "glyphicon glyphicon-pencil edit-link", title: "Edit"
+            = link_to '', admin_user_path(user), :method => :delete, class: "glyphicon glyphicon-remove-circle delete-link", title: "Delete", :data => { :confirm => "Are you sure you want to delete user: #{user.email}?" } unless user.email == current_user.email
+          -else
+            = link_to '', admin_user_url(user,revert: true), :method => :delete, class: "glyphicon glyphicon-repeat edit-link", title: "Revert", :data => { :confirm => "Are you sure you want to revert user: #{user.email}?" }
+%br
+- unless params[:deleted]
+  = link_to '<span class="glyphicon glyphicon-plus-sign"></span> New'.html_safe, new_admin_user_path, class: "btn btn-primary"
+  = link_to '<span class="glyphicon glyphicon-remove-sign"></span> Deleted'.html_safe, admin_users_path(deleted: true), class: 'btn btn-danger'
+-else
+  = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, admin_users_path, class: 'btn btn-primary'

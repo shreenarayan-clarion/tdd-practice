@@ -1,0 +1,29 @@
+%h3= "#{deleted_helper} Branches"
+
+%table#data_table.table.table-striped.table-bordered
+  %thead
+    %th Name
+    = deleted_on_th
+    = actions_th
+  %tbody
+    - @branches.each do |branch|
+      - branch_assets_employees_size = branch.devices.active.size + branch.employees.active.size
+      %tr
+        %td= link_to branch.name, branch
+        = deleted_at(branch)
+        %td.text-center
+          - unless params[:deleted]
+            / = link_to '', branch, class: "glyphicon glyphicon-eye-open show-link", title: "Show"
+            = link_to '', edit_branch_path(branch), class: "glyphicon glyphicon-pencil edit-link", title: "Edit"
+            - if branch_assets_employees_size < 0 
+              = link_to '', branch, :method => :delete, class: "glyphicon glyphicon-remove-circle delete-link", title: "Delete", :data => { :confirm => "Are you sure you want to delete branch: #{branch.name}?" }
+          - else
+            = link_to '', branch_url(branch,revert: true), :method => :delete, class: "glyphicon glyphicon-repeat edit-link", title: "Revert", :data => { :confirm => "Are you sure you want to revert branch: #{branch.name}?" }
+
+
+%br
+- unless params[:deleted]
+  = link_to '<span class="glyphicon glyphicon-plus-sign"></span> New'.html_safe, new_branch_path, class: "btn btn-primary"
+  = link_to '<span class="glyphicon glyphicon-remove-sign"></span> Deleted'.html_safe, branches_path(deleted: true), class: 'btn btn-danger'
+- else
+  = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, branches_path, class: 'btn btn-primary'

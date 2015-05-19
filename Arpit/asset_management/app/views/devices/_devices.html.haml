@@ -1,0 +1,38 @@
+- id = params[:search].present? ? "search_data_table" : "data_table"
+%table{id: id, class: "table table-striped table-bordered"}
+  %thead
+    %tr
+      %th Name
+      %th Serial Number
+      %th Category
+      %th Model Number
+      %th Branch
+      - if params[:deleted].blank?
+        %th Status
+      %th Branch
+      %th Provider
+      = deleted_on_th
+      - unless params[:search].present?
+        = actions_th
+  %tbody
+    - @devices.each do |device|
+      %tr
+        %td= link_to device.device_identifier, device
+        %td= device.serial_number
+        %td= device.device_category.try(:name)
+        %td= device.model_number
+        %td= device.branch.try(:name)
+        - if params[:deleted].blank?
+          %td= device.to_status
+        %td= device.branch.try(:name)
+        %td= device.client.present? ? device.client.name : 'Clarion'
+        = deleted_at(device)
+        
+        -if params[:deleted].present?
+          %td.text-center
+            = link_to '', device_url(device,revert: true), :method => :delete, class: "glyphicon glyphicon-repeat edit-link", title: "Revert", :data => { :confirm => "Are you sure you want to revert device: #{device.name}?" }
+        -elsif !params[:search].present?
+          %td.text-center
+            = link_to '', device, class: "glyphicon glyphicon-eye-open show-link", title: "Show"
+            = link_to '', edit_device_path(device), class: "glyphicon glyphicon-pencil edit-link", title: "Edit"
+            = link_to '', device, :method => :delete, class: "glyphicon glyphicon-remove-circle delete-link", title: "Delete", :data => { :confirm => "Are you sure you want to delete device: #{device.name}?/n" }

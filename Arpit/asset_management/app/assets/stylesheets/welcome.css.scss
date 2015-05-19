@@ -1,0 +1,50 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.top-header {
+  margin-bottom: 0px;
+}
+
+.container {
+  margin-top: 20px;
+}
+
+.close-icon {
+  float: right;
+  cursor: pointer;
+}
+
+.navbar-fixed-bottom {
+  margin-bottom: 0px;
+}
+
+.show-link:hover {
+  text-decoration:none;
+}
+
+.edit-link {
+  color: #5CB85C;
+}
+
+.edit-link:hover {
+  color: #449D44;
+  text-decoration:none;
+}
+
+.delete-link {
+  color: #D9534F;
+}
+
+.delete-link:hover {
+  color: #C9302C;
+  text-decoration:none;
+}
+
+.padding-top9{
+  padding-top: 9;
+}
+
+.padding-top15{
+  padding-top: 15;
+}

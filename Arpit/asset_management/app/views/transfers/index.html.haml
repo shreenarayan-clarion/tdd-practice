@@ -1,0 +1,27 @@
+%h3 #{params[:resource].capitalize} Transfers
+
+%table#data_table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th #{params[:resource].capitalize}
+      %th From Branch
+      %th To Branch
+      %th.span6 Transfered Date
+      %th Transfered By
+      = deleted_on_th
+      = actions_th
+  %tbody
+    - @transfers.each do |transfer|
+      %tr
+        %td= link_to transfer.transferable.name, transfer.transferable
+        %td= transfer.from_location.name
+        %td= transfer.to_location.name
+        %td= transfer.transfer_date.try(:to_s,"%b %d, %Y")
+        %td= transfer.transferee.name
+        = deleted_at(transfer)
+        %td.text-center
+          = link_to '', transfer, class: "glyphicon glyphicon-eye-open show-link", title: "Show"
+          = link_to '', edit_transfer_path(transfer), class: "glyphicon glyphicon-pencil edit-link", title: "Edit"
+          = link_to '', transfer, :method => :delete, class: "glyphicon glyphicon-remove-circle delete-link", title: "Delete", :data => { :confirm => 'Are you sure?' }
+%br
+= link_to '<span class="glyphicon glyphicon-plus-sign"></span> New'.html_safe, new_transfer_path(:resource => params[:resource]), class: "btn btn-primary"

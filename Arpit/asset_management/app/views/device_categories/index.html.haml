@@ -1,0 +1,35 @@
+%h3= "#{deleted_helper} Device Categories"
+
+%table#data_table.table.table-striped.table-bordered
+  %thead
+    %th Name
+    %th Parent Category
+    = deleted_on_th
+    - unless params[:deleted]
+      %th Devices
+      %th Softwares      
+    = actions_th
+  %tboday
+    - @device_categories.each do |device_category|
+      - device_count = sw_count = 0
+      %tr
+        %td= link_to device_category.name, device_category
+        %td= format_value(device_category.parent.try(:name))
+        = deleted_at(device_category)
+        - unless params[:deleted]
+          %td.text-center= device_count = device_category.devices.active.size
+          %td.text-center= sw_count = device_category.software_products.active.size
+        %td.text-center
+          - unless params[:deleted]
+            = link_to '', device_category, class: "glyphicon glyphicon-eye-open show-link", title: "Show"
+            = link_to '', edit_device_category_path(device_category), class: "glyphicon glyphicon-pencil edit-link", title: "Edit"
+            - if device_count == 0 && sw_count == 0
+              = link_to '', device_category, :method => :delete, class: "glyphicon glyphicon-remove-circle delete-link", title: "Delete", :data => { :confirm => "Are you sure you want to delete device category: #{device_category.name}?" }
+          -else
+            = link_to '', device_category_url(device_category,revert: true), :method => :delete, class: "glyphicon glyphicon-repeat edit-link", title: "Revert", :data => { :confirm => "Are you sure you want to revert device category: #{device_category.name}?" }
+%br
+- unless params[:deleted]
+  = link_to '<span class="glyphicon glyphicon-plus-sign"></span> New'.html_safe, new_device_category_path, class: "btn btn-primary"
+  = link_to '<span class="glyphicon glyphicon-remove-sign"></span> Deleted'.html_safe, device_categories_path(deleted: true), class: 'btn btn-danger'
+-else
+  = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, device_categories_path, class: 'btn btn-primary'

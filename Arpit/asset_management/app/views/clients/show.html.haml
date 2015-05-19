@@ -1,0 +1,18 @@
+%h3 Client Details
+
+%table.width-100
+  
+  %tr
+    %th
+      Name:
+    %td
+      = @client.name
+  %tr
+    %th
+      Projects:
+    %td
+      = format_value(@client.projects)
+ 
+%br
+= link_to '<span class="glyphicon glyphicon-pencil "></span> Edit'.html_safe, edit_client_path(@client), class: "btn btn-success" if @client.active?
+= link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, clients_path, class: "btn btn-primary"

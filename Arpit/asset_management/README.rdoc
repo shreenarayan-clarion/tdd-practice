@@ -1,0 +1,41 @@
+== README
+
+This README would normally document whatever steps are necessary to get the
+application up and running.
+
+Things you may want to cover:
+
+* Ruby version
+
+* System dependencies - Ok so what is the case
+
+* Database initialization - Udpated by Arpit new 
+
+* Configuration
+
+* Database creation
+
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
+
+
+Please feel free to use a different markup language if you do not plan to run
+<tt>rake doc:app</tt>.
+
+
+Kaushal edited
+Parth edited & Edited by Arpit
+
+lets see what heappen
+
+* This command will clear all the files for SVN MERGE
+find . -type f -name "*.merge*" -delete -or -name "*.working" -delete
+
+* This command will resolve all the conflicted files 
+svn resolve --accept working -R .

@@ -1,0 +1,8 @@
+%h3 Forgot Your Password?
+
+= bootstrap_form_for(resource, as: resource_name, url: password_path(resource_name), layout: :horizontal, control_col: "col-sm-3", html: { method: :post, class: 'validate-form' }) do |f|
+  
+  = f.email_field :email, autofocus: true, data: { 'rule-required' => true, 'rule-email'=> true, 'msg-email' => "Please enter a valid email" }, placeholder: "Enter email"
+  = f.button(type: 'submit', class: "btn btn-success") do
+    %i{ class: "glyphicon glyphicon-ok" }
+    Send

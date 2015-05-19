@@ -1,0 +1,41 @@
+.width-100{width:100%}
+.width-75{width:75%}
+.width-50{width:50%}
+label.error { color: red;font-weight: 100;font-size: 13px;}
+.form-group	span.required::after{content: ' *';color:red;}
+.has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline{color:black;}
+.has-error .help-block{font-size: 13px;color:red ;}
+.has-error .form-control{border-color:  #cccccc}
+table.dataTable{ border-collapse: collapse;}
+.dropdown-menu > li a.active{text-decoration:none;color:#262626;background-color:#f5f5f5}
+.multiselect-container.dropdown-menu > li > a { padding: 0px }
+.multiselect > .caret { margin-left: 4px }
+.gap{margin-bottom: 5px}
+.link{cursor: pointer;}
+.help-block > ul, ol { margin-left: -20px}
+.btn-group,button.multiselect{width: 100%;}
+.multiselect > .caret {
+    float: right;
+    margin-left: 0;
+    margin-top: -12px;
+}
+.multiselect.btn {
+    text-align: left;
+}
+button.multiselect{overflow: hidden;}
+.disabled{cursor: not-allowed;}
+.btn-file {    position: relative;    overflow: hidden;}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}

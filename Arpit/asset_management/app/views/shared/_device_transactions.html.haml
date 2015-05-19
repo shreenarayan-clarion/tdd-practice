@@ -1,0 +1,16 @@
+- if @device_transactions.present?
+  = f.fields_for :device_transactions, @device_transactions, :wrapper => false do |t|
+    .row.nested_div
+      %fieldset
+        %legend
+        .col-md-5
+          - disabled = type == "invoice_" ? true : false
+          = t.text_field "#{type}title".to_sym, placeholder: 'Title', label: "Title<span class='required'/>".html_safe, data: { 'rule-uniqeName' => 'title', 'rule-required' => true, 'rule-maxlength' => 35, 'msg-maxlength' => "Maximum 35 characters", 'title' => "Maximum 35 characters", 'rule-validName' => true }, class: "input_tooltip", maxlength: 35, disabled: disabled
+
+          = t.text_field "#{type}quantity".to_sym, placeholder: 'Quantity', label: "Quantity <span class='required'/>".html_safe, data: { 'rule-required' => true ,'rule-number' => true, 'rule-maxlength' => 3 ,'msg-maxlength'=> "Maximum 3 digits", 'title' => "Maximum 3 digits", 'rule-RealNumber'=> true }, class: "input_tooltip", maxlength: 3, disabled: disabled
+
+          = t.text_field "#{type}price".to_sym, placeholder: 'Price', label: "Price<small> (per unit)</small><span class='required'/>".html_safe, data: { 'rule-required' => true ,'rule-number' => true, 'rule-maxlength' => 10 ,'msg-maxlength'=> "Maximum 10 digits", 'title' => "Maximum 10 digits", 'rule-RealNumber'=> true }, class: "input_tooltip", maxlength: 10
+        .col-md-5
+          = t.text_area "#{type}description".to_sym, style: "height:58px", placeholder: 'Description',label: "Description<span class='required'/>".html_safe, data: {'rule-required' => true, 'rule-maxlength' => 255, 'msg-maxlength' => "Maximum 255 characters", title: "Maximum 255 characters" }, class: "form-control input_tooltip", maxlength: 255, disabled: disabled
+
+          = t.text_area "#{type}notes".to_sym, style: "height:58px", placeholder: 'Notes',label: "Notes".html_safe, data: {'rule-maxlength' => 255, 'msg-maxlength' => "Maximum 255 characters", title: "Maximum 255 characters" }, class: "form-control input_tooltip", maxlength: 255 

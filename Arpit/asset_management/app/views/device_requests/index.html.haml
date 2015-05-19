@@ -1,0 +1,30 @@
+%h3 Device Requests
+
+%table#data_table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Identifier
+      %th Title
+      %th Device Category
+      %th Vendor
+      %th Date
+      = actions_th
+  %tbody
+    - @device_requests.each do |device_request|
+      - transactions = device_request.device_transactions
+      - categories = transactions.map(&:device_category)
+      - vendors = transactions.map(&:vendor)
+      %tr
+        %td= link_to device_request.identifier, device_request
+        %td= device_request.device_transactions.map(&:request_title).uniq.join(', ')
+        %td= categories.compact.map(&:name).uniq.join(', ') if categories.present?
+        %td= vendors.compact.map(&:name).uniq.join(', ') if vendors.present?
+        %td= device_request.on_date.try(:to_s, "%b %d, %Y")
+        = deleted_at(device_request)
+        %td.text-center
+          = link_to '', device_request, class: "glyphicon glyphicon-eye-open show-link", title: "Show"
+          - if device_request.edit?
+            = link_to '', edit_device_request_path(device_request), class: "glyphicon glyphicon-pencil edit-link", title: "Edit"
+            = link_to '', device_request, :method => :delete, class: "glyphicon glyphicon-remove-circle delete-link", title: "Delete", :data => { :confirm => "Are you sure you want to delete device request: #{device_request.identifier}?" }
+%br
+= link_to '<span class="glyphicon glyphicon-plus-sign"></span> New'.html_safe, new_device_request_path, class: 'btn btn-primary'

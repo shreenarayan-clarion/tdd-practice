@@ -1,0 +1,10 @@
+= bootstrap_form_for(@user, url: url, method: method, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-3" , html: { class: 'validate-form' } ) do |f|
+  = f.email_field :email, placeholder: "Enter email", data: { 'rule-required' => true, 'rule-email'=> true, 'msg-email' => "Please enter a valid email" }, label: "Email <span class='required'/>".html_safe
+  = f.collection_select :employee_id, (Employee.non_user_employees+[@user.employee]).compact, :id, :name, include_blank: 'Please Select'
+  = f.password_field :password, autocomplete: "off", data: { 'rule-required' => require_password?(params[:action]), 'rule-minlength'=> 8, 'msg-minlength' => "Minimum 8 characters required", 'rule-maxlength'=> 15, 'msg-maxlength' => "Maximum 15 characters allowed", title: "Minimum 8 and Maximum 15 characters" }, class: "input_tooltip", placeholder: "Enter password", maxlength: 15, label: required_password_label(params[:action])
+  = f.password_field :password_confirmation, autocomplete: "off", data: { 'rule-required' => require_password?(params[:action]), 'rule-equalTo'=> "#user_password", 'msg-equalTo' => "Does not match with password", 'rule-minlength'=> 8, 'msg-minlength' => "Minimum 8 characters required", 'rule-maxlength'=> 15, 'msg-maxlength' => "Maximum 15 characters allowed", title: "Minimum 8 and Maximum 15 characters" }, class: "input_tooltip", placeholder: "Enter password confirmation", label: "Confirm Password", maxlength: 15, label: required_confirm_password_label(params[:action])
+  
+  = f.button(type: 'submit', class: "btn btn-success") do
+    %i{ class: "glyphicon glyphicon-ok" }
+    Save
+  = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, admin_users_path, class: "btn btn-primary"

@@ -1,0 +1,57 @@
+- if @quotation.new?
+  - url = quotations_path(device_request_id: @device_request.id,vendor_id: @quotation.vendor_id)
+  - method = "post"
+-else
+  - url = quotation_path(@quotation, device_request_id: @device_request.id)
+  - method = "put"
+
+#quotations
+  = bootstrap_form_for @device_request ,url: url ,method: method, layout: :horizontal, control_col: "col-sm-7",label_col: "col-sm-4", html: { class: 'validate-form' } do |f|
+    = f.fields_for :quotations, @quotation, :wrapper => false do |quotation_field|
+      .row
+        - if @quotation.new?
+          .col-md-5
+            = quotation_field.select :device_request_id, @device_requests.map{ |request| [request.identifier, request.id] }, { include_blank: 'Please Select', label: "Device Request<span class='required'/>".html_safe }, data: { 'rule-required' => true }
+          .col-md-5
+            = quotation_field.collection_select :vendor_id, @vendors||[], :id, :name, { include_blank: 'Please Select', label: "Vendor<span class='required'/>".html_safe }, data: { 'rule-required' => true }
+        - else
+          .col-md-5
+            .form-group
+              %label.control-label.col-sm-4{:for => ""}
+                Request
+                %span.required
+              .col-sm-7
+                = @quotation.device_request.identifier
+          .col-md-5
+            .form-group
+              %label.control-label.col-sm-4{:for => ""}
+                Vendor
+                %span.required
+              .col-sm-7
+                = @quotation.device_transactions.first.vendor.name
+      #date-upload-div{class: "#{@quotation.new? ? 'hide row' : 'row' }"}
+        .col-md-5
+          = quotation_field.text_field :on_date, placeholder: 'dd/mm/yyyy', data: { 'date-format' =>"DD/MM/YYYY", 'behaviour' => 'no-future-datetimepicker', 'rule-dateFormat' => true, 'rule-required' => true, 'start-date' => @device_request.on_date.to_s }, label: "Date <span class='required'/>".html_safe, value: f.object.try(:on_date).try(:strftime,"%d/%m/%Y")
+        .col-md-5
+          = quotation_field.fields_for :uploads,@uploads, :wrapper => false do |attachment_form|
+            = attachment_form.file_field :attachment ,accept: ".pdf"          
+          .text-right
+            = link_to "#{@quotation.uploads.try(:first).try(:attachment_file_name)}", download_path(id: @quotation.uploads.try(:first).try(:id))
+
+
+
+    #device_transaction_div{style: "#{@quotation.new? ? 'display:none' : '' }"}
+      = render "/shared/device_transactions", device_transactions: @device_transactions, type: "quotation_",f: f
+
+    .row
+      #loading_div.col-md-2.col-md-offset-5.hide
+        %content
+          %section
+            .loadingspin
+
+    .row
+      = f.button(type: 'submit', class: "btn btn-success") do
+        %i{ class: "glyphicon glyphicon-ok" }
+        Save
+
+      = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, quotations_path, class: "btn btn-primary"

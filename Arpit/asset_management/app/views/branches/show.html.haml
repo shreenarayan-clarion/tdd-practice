@@ -1,0 +1,12 @@
+%h3 Branch Details
+
+%p
+  %b Name:
+  = @branch.name
+/ %p
+/   %b Parent:
+/   = @branch.parent.try(:name)
+
+%br
+= link_to '<span class="glyphicon glyphicon-pencil "></span> Edit'.html_safe, edit_branch_path(@branch), class: "btn btn-success" if @branch.active?
+= link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, branches_path, class: "btn btn-primary"

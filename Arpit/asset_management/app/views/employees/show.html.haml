@@ -1,0 +1,101 @@
+%h3 Employee Details
+
+%table.width-100
+  %tr
+    %th
+      First Name:
+    %td
+      = @employee.first_name
+    %th
+      Last Name:
+    %td
+      = @employee.last_name
+  %tr
+    %th
+      Email:
+    %td
+      = @employee.email
+    %th
+      Employee Id:
+    %td
+      = @employee.employee_number
+  %tr
+    %th
+      Designation:
+    %td
+      = @employee.designation
+    %th
+      Technology:
+    %td
+      = @employee.technology
+  %tr
+    %th
+      Department:
+    %td
+      = @employee.department
+    %th
+      Branch:
+    %td
+      = @employee.branch.try(:name)
+  %tr
+    %th
+      Joined Date:
+    %td
+      = @employee.join_date.try(:strftime,"%b %d, %Y")
+    %th
+      Resigned Date:
+    %td
+      = format_value(@employee.resign_date.try(:strftime,"%b %d, %Y"))
+  %tr
+    %th
+      Skype:
+    %td
+      = format_value(@employee.skype_id)
+    %th
+      PM Tool:
+    %td
+      = format_value(@employee.pm_tool_id)
+  %tr
+    %th
+      Pandian:
+    %td
+      = format_value(@employee.pandian_id)
+    %th
+      Wiki:
+    %td
+      = format_value(@employee.wiki_id)
+  %tr
+    %th
+      Sapience:
+    %td
+      = format_value(@employee.sapience_id)
+    %th
+      Helpdesk:
+    %td
+      = format_value(@employee.helpdesk_id)
+
+
+%h3 Devices
+%table#search_data_table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Name
+      %th Device Category
+      %th Serial Number
+      %th Assigned Date
+
+  %tbody
+    - @employee.cureent_devices.each do |assignment|
+      - device = assignment.device
+      - if device.current_employee == @employee
+        %tr
+          %td= link_to device.try(:device_identifier), device
+          %td= device.device_category.name
+          %td= device.serial_number
+          %td.span-6
+            = assignment.assign_date.to_s( "%b %d, %Y")
+
+
+%br
+= link_to '<span class="glyphicon glyphicon-pencil "></span> Edit'.html_safe, edit_employee_path(@employee), class: "btn btn-success" if @employee.active?
+= link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, employees_path, class: "btn btn-primary"

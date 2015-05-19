@@ -1,0 +1,12 @@
+%h3 Devices Assignment
+= bootstrap_form_for @device, url: assignment_devices_path, layout: :horizontal, control_col: "col-sm-3", html: { class: 'validate-form' }  do |d|
+  = d.collection_select 'branch_id', Branch.all, :id, :name, {include_blank: 'Please Select',  label: "Branch<span class='required'/>".html_safe}, data: { 'rule-required' => true }, class: 'branch_select'
+  = d.collection_select 'device_category_id', DeviceCategory.all, :id, :name, { label: "Device Category<span class='required'/>".html_safe, include_blank: 'Please Select'}, data: { 'rule-required' => true }, class: 'category_select'
+  = d.fields_for :device_assignments, @device_assignment do |f|
+    = f.collection_select 'device_id', @devices||[], :id, :name, { prompt: 'Please Select', label: "Device<span class='required'/>".html_safe}, data: { 'rule-required' => true }, class: 'device_select'
+    = f.collection_select 'employee_id', @employees||[], :id, :name, {prompt: 'Please Select', label: "Employee<span class='required'/>".html_safe}, data: { 'rule-required' => true }, class: "employee_select"
+    = f.text_field 'assign_date', placeholder: 'dd/mm/yyyy', label: "Assign Date<span class='required'/>".html_safe, data: { 'behaviour' => 'datepicker', 'rule-required' => true }
+  = d.button(type: 'submit', class: "btn btn-success") do
+    %i{ class: "glyphicon glyphicon-ok" }
+    Save
+  = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, devices_path, class: "btn btn-primary"

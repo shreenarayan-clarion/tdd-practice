@@ -1,0 +1,37 @@
+%h3="#{deleted_helper} Vendors"
+
+%table#data_table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th City
+      %th State
+      %th Primary Number
+      = deleted_on_th
+      = actions_th
+
+  %tbody
+    - @vendors.each do |vendor|
+      %tr
+        %td= link_to vendor.name, vendor
+        %td= vendor.email
+        %td= vendor.city
+        %td= vendor.state
+        %td= vendor.contact_number
+        = deleted_at(vendor)
+        %td.text-center
+          - unless params[:deleted]
+            = link_to '', vendor, class: "glyphicon glyphicon-eye-open show-link", title: "Show"
+            = link_to '', edit_vendor_path(vendor), class: "glyphicon glyphicon-pencil edit-link", title: "Edit"
+            = link_to '', vendor, :method => :delete, class: "glyphicon glyphicon-remove-circle delete-link", title: "Delete", :data => { :confirm => "Are you sure you want to delete vendor: #{vendor.name}?" }
+          -else
+            = link_to '', vendor_url(vendor,revert: true), :method => :delete, class: "glyphicon glyphicon-repeat edit-link", title: "Revert", :data => { :confirm => "Are you sure you want to revert vendor: #{vendor.name}?" }
+
+%br
+- unless params[:deleted]
+  = link_to '<span class="glyphicon glyphicon-plus-sign"></span> New'.html_safe, new_vendor_path, class: 'btn btn-primary'
+  = link_to '<span class="glyphicon glyphicon-remove-sign"></span> Deleted'.html_safe, vendors_path(deleted: true), class: 'btn btn-danger'
+
+-else
+  = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, vendors_path, class: 'btn btn-primary'

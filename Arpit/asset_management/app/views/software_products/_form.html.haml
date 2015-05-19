@@ -1,0 +1,14 @@
+= bootstrap_form_for @software_product, layout: :horizontal, control_col: "col-sm-3", html: { class: 'validate-form' } do |f|
+  = f.text_field :name, data: {'rule-required' => true, 'rule-maxlength' => 35, 'msg-maxlength' => "Maximum 35 characters", title: "Maximum 35 characters", 'rule-validName' => true }, class: "input_tooltip", label: "Name <span class='required'/>".html_safe, maxlength: 35
+  = f.collection_select :device_category_id, DeviceCategory.active, :id, :name, { include_blank: 'Select Category', label: "Device Category<span class='required'/>".html_safe }, data: { 'rule-required' => true }
+  = f.text_field :version, data: {'rule-required' => true, 'rule-maxlength' => 35, 'msg-maxlength' => "Maximum 35 characters", title: "Maximum 35 characters"}, class: "input_tooltip", label: "Version <span class='required'/>".html_safe, maxlength: 35
+  = f.form_group :license, label: { text: "License" } do
+    = f.check_box :license, label: ''
+  #license_no
+    = f.text_field :license_no, data: {'rule-required' => true, 'rule-maxlength' => 35, 'msg-maxlength' => "Maximum 35 characters", title: "Maximum 35 characters"}, class: "input_tooltip", label: "License No <span class='required'/>".html_safe, maxlength: 35
+  = f.text_field :purchase_date, 'data-behaviour'=>'no-future-datetimepicker', value: f.object.try(:purchase_date).try(:strftime,"%d/%m/%Y"), placeholder: 'dd/mm/yyyy', label: "Purchase Date"
+  = f.text_area :description, data: { 'rule-validDescription' => true }
+  = f.button(type: 'submit', class: "btn btn-success") do
+    %i{ class: "glyphicon glyphicon-ok" }
+    Save
+  = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, software_products_path, class: "btn btn-primary"

@@ -1,0 +1,32 @@
+= bootstrap_form_for @vendor, layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-6", html: { class: 'validate-form' } do |f|
+
+  %table.col-xs-12
+    %tr
+      %td
+        = f.text_field :name, data: { 'rule-required' => true, 'rule-maxlength' => 35, 'msg-maxlength' => "Maximum 35 characters", title: "Maximum 35 characters", 'rule-validName' => true }, class: "input_tooltip", :label => "Name<span class='required'/>".html_safe, maxlength: 35
+      %td
+        = f.text_field :email, data: { 'rule-required' => true,'rule-email'=>true,'msg-email'=>"Please enter a valid email" }, :label => "Email<span class='required'/>".html_safe
+    %tr
+      %td
+        = f.text_area :address, data: { 'rule-required' => true }, :label => "Address<span class='required'/>".html_safe
+    %tr
+      %td
+        = f.text_field :city, data: { 'rule-required' => true, 'rule-maxlength' => 35, 'msg-maxlength' => "Maximum 35 characters" }, :label => "City<span class='required'/>".html_safe
+      %td
+        = f.collection_select :state, Vendor::STATE, :to_s, :to_s, {include_blank: 'Please Select',:label => "State<span class='required'/>".html_safe}, data: { 'rule-required' => true }
+
+    %tr
+      %td
+        = f.text_field :contact_number, data: { 'rule-required' => true, 'rule-phoneNumber' => true, 'rule-maxlength' => 13, 'msg-maxlength' => "No more than 13 digits", title: "XXXX-XXXXXXXX" } , label: "Primary Number<span class='required'/>".html_safe, maxlength: 13, class: "input_tooltip"
+      %td
+        = f.text_field :fax_number, data: { 'rule-phoneNumber' => true, 'rule-maxlength' => 13, 'msg-maxlength' => "No more than 13 digits", title: "XXXX-XXXXXXXX" }, maxlength: 13, label: "Fax Number", maxlength: 13, class: "input_tooltip"
+    %tr
+      %td
+        = f.text_field :mobile_number, data: { 'rule-number' => true, 'rule-minlength' => 10, 'msg-minlength' => "No less than 10 digits", title: "XXXXXXXXXX" }, label: "Secondary Number", maxlength: 10, class: "input_tooltip"
+      %td
+        = f.text_field :website, data: { 'rule-url' => true, title: "http://www.vendor.com" }, class: "input_tooltip"
+  .action
+    = f.button(type: 'submit', class: "btn btn-success") do
+      %i{ class: "glyphicon glyphicon-ok" }
+      Save
+    = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, vendors_path, class: "btn btn-primary"

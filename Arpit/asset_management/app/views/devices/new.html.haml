@@ -1,0 +1,7 @@
+%h3 New Device
+// This will generate nested attribute vice bootstraped form 
+// Nested form is used for adding multiple assets in single code.
+// For editing device it will be only bootstrap_form_for
+= bootstrap_nested_form_for @device, layout: :horizontal, control_col: "col-sm-7",label_col: "col-sm-5", html: { class: 'validate-form' }  do |f|
+	= render 'form' ,f: f
+

@@ -1,0 +1,48 @@
+%h3 Invoice Details
+%table.width-100
+  %tr
+    %th Identifier:
+    %td= @invoice.identifier
+  %tr
+    %th Date:
+    %td= @invoice.on_date.to_s("%b %d, %Y")
+  %tr
+    %th Purchase Order:
+    %td= @invoice.purchase_order.try(:identifier)
+  %tr
+    %th Attachment:
+    %td= link_to "#{@invoice.uploads.try(:first).try(:attachment_file_name)}", download_path(id: @invoice.uploads.try(:first).try(:id))
+%br
+%table.table.table-striped.table-bordered
+  %thead
+    %th Title
+    %th Description
+    %th Quantity
+    %th 
+      Price
+      %small (per unit)
+    %th Total
+  %tbody
+    - total_quantity_price= 0.0
+    - total_invoice_price = 0.0
+    - @invoice.device_transactions.each do |t|
+      %tr
+        %td= t.invoice_title
+        %td= t.invoice_description
+        %td.text-center= t.invoice_quantity.to_i.round
+        %td.text-right= t.invoice_price.to_f
+        - total_quantity_price= t.invoice_quantity.to_f * t.invoice_price.to_f
+        - total_invoice_price+= total_quantity_price
+        %td.text-right
+          %b
+            = total_quantity_price.round(2) 
+  %tr
+    %td{colspan: 4}
+      %b Total
+    %td.text-right
+      %b
+        = total_invoice_price.round(2) 
+        
+%br
+= link_to '<span class="glyphicon glyphicon-pencil "></span> Edit'.html_safe, edit_invoice_path(@invoice), class: "btn btn-success" if @invoice.active?
+= link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, invoices_path, class: "btn btn-primary"

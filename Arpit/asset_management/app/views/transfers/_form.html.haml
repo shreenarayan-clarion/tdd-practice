@@ -1,0 +1,24 @@
+= bootstrap_form_for @transfer, layout: :horizontal, control_col: "col-sm-3", html: { class: 'validate-form' } do |f|
+  = f.hidden_field :transferable_type
+  - if params[:action] == "edit" || params[:action] == "update"
+    .form-group
+      = label_tag "from_location", "From Branch<span class='required'/>".html_safe, class: "control-label col-sm-2"
+      .col-sm-3
+        = @transfer.from_location.try(:name)
+        = f.hidden_field :from_location_id
+  - else
+    = f.select :from_location_id, Branch.active.map{ |branch| [branch.name, branch.id] }, { prompt: 'Select Current Branch', label: "From Branch<span class='required'/>".html_safe}, data: { 'rule-required' => true, resource_name: @transfer.transferable_type}
+
+  = f.select :to_location_id, Branch.active.map{ |branch| [branch.name, branch.id] }, { prompt: 'Select Transfer Branch', label: "To Branch<span class='required'/>".html_safe}, data: { 'rule-required' => true, 'rule-notEqualTo' => true, 'rule-notEqualTo'=> "#transfer_from_location_id"}
+
+  = f.collection_select :transferable_id, @resource||[], :id, :name, { include_blank: 'Please Select', label: "#{@transfer.transferable_type} <span class='required'/>".html_safe }, data: { 'rule-required' => true }
+   
+  = f.text_field :transfer_date, value: f.object.try(:transfer_date).try(:strftime,"%d/%m/%Y"), placeholder: 'dd/mm/yyyy',  data: { behaviour: 'no-future-datetimepicker', 'rule-required' => true ,'rule-dateFormat' => true }, label: "Transfer Date<span class='required'/>".html_safe, help: help_text(@transfer)
+   
+  = f.select :transferee_id, Employee.active.map{ |employee| [employee.name, employee.id] }, { :include_blank => "Select Employee", label: "Transfer By<span class='required'/>".html_safe}, data: { 'rule-required' => true }
+
+  = f.button(type: 'submit', class: "btn btn-success") do
+    %i{ class: "glyphicon glyphicon-transfer" }
+    Transfer
+
+  = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, transfers_path(:resource => @transfer.transferable_type), class: "btn btn-primary"

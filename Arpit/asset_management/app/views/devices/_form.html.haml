@@ -1,0 +1,58 @@
+- edit_parent = @device.child_devices.size != 0
+- parent_select = (@parent_devices||[]).group_by{|s| s.status}.map{|status, values| [Device.status[status.to_sym], values.map{|s| [s.name, s.id]}]}
+.row
+  .col-md-5
+    = f.select :device_category_id, @device_categories.map{ |a| [a.name, a.id] }, { prompt: 'Select Category', label: "Device Category<span class='required'/>".html_safe }, data: { 'rule-required' => true }
+    = f.text_field :device_identifier, data: { 'rule-required' => true, 'rule-maxlength' => 35, 'msg-maxlength' => "Maximum 35 characters", 'title' => "Maximum 35 characters", 'rule-validName' => true }, class: "input_tooltip", label: "Name<span class='required'/>".html_safe, maxlength: 35
+    = f.select :parent_id, parent_select, { include_blank: 'Select Associated Device', label: "Associated Device"}, {is_parent: @device.parent_id.blank?}
+    = f.select :client_id, Device.provider, label: "Provider"
+  .col-md-5
+    = f.text_field :purchase_date, placeholder: 'dd/mm/yyyy', label: "Purchase Date <span class='required'/>".html_safe, data: { 'rule-required' => true,  'rule-dateFormat' => true, 'behaviour' => 'no-future-datetimepicker' }  
+    = f.collection_select :branch_id, @branches, :id, :name, { include_blank: 'Select Branch', label: "Branch<span class='required'/>".html_safe }, data: { 'rule-required' => true }, class: 'branch_select'
+    = f.text_field :ip_address, data: { 'rule-ipv4' => true, 'msg-ipv4' => "Please enter an valid IP Address" }, label: "IP Address"
+    - unless @device.new?
+      = f.select :status, Device.status.invert, {include_blank: 'Select Status', label: "Status<span class='required'/>".html_safe }, data: {assigned: @device.status!='assigned'}
+.row
+  .col-md-5
+    .form-group
+      %label.control-label.col-sm-5{:for => "warranty"} Warranty
+      .col-sm-7
+        = f.check_box :lifetime_warranty ,checked: @device.lifetime_warranty == true ? true : false
+#warrenty_values{style: "#{@device.lifetime_warranty == true ? 'display:none' : ''}"}
+  .row
+    .col-md-5
+      = f.text_field :warranry_year, data: { 'rule-required' => true, 'rule-RealNumber' => true, 'msg-maxlength' => "Maximum 2 digits", title: "Maximum 2 digits" }, label: "Years<span class='required'/>".html_safe, class: "input_tooltip #{@device.lifetime_warranty == true ? 'ignore' : ''}", maxlength: 2
+    .col-md-5
+      = f.text_field :warranry_month, data: {'rule-month' =>true, 'rule-RealNumber' => true, 'rule-required' => true, 'msg-maxlength' => "Maximum 2 digits", title: "Maximum 2 digits" }, label: "Months<span class='required'/>".html_safe, class: "input_tooltip #{@device.lifetime_warranty == true ? 'ignore' : ''}", maxlength: 2
+
+- if @device.new?
+  .row
+    .col-md-5
+      .form-group
+        %label.control-label.col-sm-5{:for => ""} Qantity
+        .col-sm-2
+          = link_to '<span class="glyphicon glyphicon-minus-sign"></span>'.html_safe,"javascript:void(0)", id: "remove-device" ,:disabled=> "disabled", :data => { :target => "#more_devices" }, class: "btn btn-danger",style:'height:33px'
+        .col-sm-3
+          %input#size.form-control.input_tooltip.text-center{:name => "size", :size => "3", :title => "", :type => "text",:value=> "1" ,:disabled=> true,'data-rule-validateMaxDevice' => true} 
+        .col-sm-2
+          = f.link_to_add '<span class="glyphicon glyphicon-plus-sign"></span>'.html_safe, :more_devices, :data => { :target => "#more_devices" }, class: "btn btn-primary nested-add",style:'height:33px'
+
+// In case of new devices we can add multiple records for then same devices ex. mouse . We have to change give only serial number and model number and duplicate record will be created
+- if @device.new_record?
+  #more_devices
+    = f.fields_for :more_devices, :wrapper => false,label_col: "col-sm-5",control_col: "col-sm-7"  do |fields|
+      .row.nested_div
+        =render 'serial_and_model_fields', f: fields
+        .col-md-1.padding-top9.hide
+          = fields.link_to_remove "", class: "glyphicon glyphicon-minus-sign delete-link nested-remove"
+ 
+- else
+  .row
+    =render 'serial_and_model_fields' ,f: f
+  = hidden_field_tag :id,@device.id
+.gap
+= f.button(type: 'submit', class: "btn btn-success") do
+  %i{ class: "glyphicon glyphicon-ok" }
+  Save
+
+= link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, devices_path, class: "btn btn-primary"

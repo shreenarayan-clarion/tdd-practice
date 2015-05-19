@@ -1,0 +1,5 @@
+%h3 Editing Device
+// This is a bootstraped normal form which will only handle single device editing
+= bootstrap_form_for @device, layout: :horizontal, control_col: "col-sm-7",label_col: "col-sm-5", html: { class: 'validate-form' }  do |f|
+	= render 'form' ,f: f
+

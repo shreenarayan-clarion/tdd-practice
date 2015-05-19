@@ -1,0 +1,33 @@
+%h3= "#{deleted_helper} Purchase Orders"
+
+%table#data_table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Identifier
+      %th Quotation
+      %th Title
+      %th Device Category
+      %th Vendor
+      %th Date
+      = deleted_on_th
+      = actions_th
+  %tbody
+    - @purchase_orders.each do |purchase_order|
+      - transactions = purchase_order.device_transactions
+      - categories = transactions.map(&:device_category)
+      - vendors = transactions.map(&:vendor)
+      %tr
+        %td= link_to purchase_order.identifier, purchase_order
+        %td= link_to purchase_order.quotation.identifier, purchase_order.quotation
+        %td= purchase_order.device_transactions.map(&:purchase_title).uniq.join(', ')
+        %td= categories.compact.map(&:name).uniq.join(', ') if categories.present?
+        %td= vendors.compact.map(&:name).uniq.join(', ') if vendors.present?
+        %td= purchase_order.on_date.to_s("%b %d, %Y")
+        = deleted_at(purchase_order)
+        %td.text-center
+          = link_to '', purchase_order, class: "glyphicon glyphicon-eye-open show-link", title: "Show"
+          - if purchase_order.edit?
+            = link_to '', edit_purchase_order_path(purchase_order), class: "glyphicon glyphicon-pencil edit-link", title: "Edit"
+            = link_to '', purchase_order, :method => :delete, class: "glyphicon glyphicon-remove-circle delete-link", title: "Delete",  :data => { :confirm => "Are you sure you want to delete Purchase Order: #{purchase_order.identifier}?" }
+%br
+= link_to '<span class="glyphicon glyphicon-plus-sign"></span> New'.html_safe, new_purchase_order_path, class: 'btn btn-primary'

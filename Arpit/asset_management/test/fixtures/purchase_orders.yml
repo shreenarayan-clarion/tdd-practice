@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  identifier: MyString
+  quotation_id: 
+  on_date: 2014-07-22
+
+two:
+  identifier: MyString
+  quotation_id: 
+  on_date: 2014-07-22

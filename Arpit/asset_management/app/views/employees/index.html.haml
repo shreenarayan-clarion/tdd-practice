@@ -1,0 +1,40 @@
+%h3= "#{deleted_helper} Employees"
+
+%table#data_table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th Employee Id
+      %th.span6 Joined Date
+      %th.span6 Resigned Date
+      %th Branch
+      = deleted_on_th
+      = actions_th
+
+  %tbody
+    - @employees.each do |employee|
+      %tr
+        %td= link_to employee.name, employee
+        %td= employee.email
+        %td= employee.employee_number
+        %td.span-6= employee.join_date.try(:to_s,"%b %d, %Y")
+        %td= format_value(employee.resign_date.try(:to_s,"%b %d, %Y"))
+        %td= employee.branch.try(:name)
+        = deleted_at(employee)
+        %td.text-center
+          // This condition will apply for the deleted records 
+          - unless params[:deleted]
+            = link_to '', employee, class: "glyphicon glyphicon-eye-open show-link", title: "Show"
+            = link_to '', edit_employee_path(employee), class: "glyphicon glyphicon-pencil edit-link", title: "Edit"
+            = link_to '', employee, :method => :delete, class: "glyphicon glyphicon-remove-circle delete-link", title: "Delete", :data => { :confirm => "Are you sure you want to delete employee: #{employee.name}? \n This will remove device associated." }
+          -else
+            = link_to '', employee_url(employee,revert: true), :method => :delete, class: "glyphicon glyphicon-repeat edit-link", title: "Revert", :data => { :confirm => "Are you sure you want to revert employee: #{employee.name}?" }
+%br
+// This condition will apply for the deleted records 
+- unless params[:deleted]
+  = link_to '<span class="glyphicon glyphicon-plus-sign"></span> New'.html_safe, new_employee_path, class: 'btn btn-primary'
+  = link_to '<span class="glyphicon glyphicon-remove-sign"></span> Deleted'.html_safe, employees_path(deleted: true), class: 'btn btn-danger'
+  = link_to '<span class="glyphicon glyphicon-check"></span> Assignment'.html_safe, new_device_assignment_path, class: 'btn btn-primary'
+-else
+  = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, employees_path, class: 'btn btn-primary'

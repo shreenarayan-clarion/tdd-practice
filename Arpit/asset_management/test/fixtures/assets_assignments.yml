@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  asset_id: 
+  employee_id: 
+  assign_date: 2014-06-19
+
+two:
+  asset_id: 
+  employee_id: 
+  assign_date: 2014-06-19

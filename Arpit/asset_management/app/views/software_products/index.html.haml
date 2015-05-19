@@ -1,0 +1,35 @@
+%h3= "#{deleted_helper} Software Products"
+
+%table#data_table.table.table-striped.table-bordered
+  %thead
+    %th Name
+    %th Assets category
+    %th Version
+    %th License
+    %th License Number
+    = deleted_on_th
+    = actions_th
+  %tboday
+    - @software_products.each do |software_product|
+      %tr
+        %td= link_to software_product.name, software_product
+        %td= software_product.device_category.try(:name)
+        %td= software_product.version
+        %td= software_product.license == true ? "Yes" : "No"
+        %td= format_value(software_product.license_no)
+        = deleted_at(software_product)
+        %td.text-center
+          -unless params[:deleted]
+            = link_to '', software_product, class: "glyphicon glyphicon-eye-open show-link", title: "Show"
+            = link_to '', edit_software_product_path(software_product), class: "glyphicon glyphicon-pencil edit-link", title: "Edit"
+            = link_to '', software_product, :method => :delete, class: "glyphicon glyphicon-remove-circle delete-link", title: "Delete", :data => { :confirm => "Are you sure you want to delete software: #{software_product.name}?" }
+          -else
+            = link_to '', software_product_url(software_product,revert: true), :method => :delete, class: "glyphicon glyphicon-repeat edit-link", title: "Revert", :data => { :confirm => "Are you sure you want to revert software product: #{software_product.name}?" }
+
+%br
+%br
+-unless params[:deleted]
+  = link_to '<span class="glyphicon glyphicon-plus-sign"></span> New'.html_safe, new_software_product_path, class: "btn btn-primary"
+  = link_to '<span class="glyphicon glyphicon-remove-sign"></span> Deleted'.html_safe, software_products_path(deleted: true), class: 'btn btn-danger'   
+-else
+  = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, software_products_path, class: 'btn btn-primary'

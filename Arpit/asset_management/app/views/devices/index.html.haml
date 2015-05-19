@@ -1,0 +1,10 @@
+%h3= "#{deleted_helper} Devices"
+= render 'devices'
+%br
+- unless params[:deleted]
+	= link_to '<span class="glyphicon glyphicon-plus-sign"></span> New'.html_safe, new_device_path, class: 'btn btn-primary'
+	= link_to '<span class="glyphicon glyphicon-remove-sign"></span> Deleted'.html_safe, devices_path(deleted: true), class: 'btn btn-danger'
+	= link_to '<span class="glyphicon glyphicon-check"></span> Assignment'.html_safe, new_device_assignment_path, class: 'btn btn-primary'
+-else
+	= link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, devices_path, class: 'btn btn-primary'
+

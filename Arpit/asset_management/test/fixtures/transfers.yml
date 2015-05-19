@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  transferable_id: 1
+  transferable_type: MyString
+  from_location: 1
+  to_location: 1
+  transfer_date: 2014-06-23 12:31:24
+  transferee: 1
+
+two:
+  transferable_id: 1
+  transferable_type: MyString
+  from_location: 1
+  to_location: 1
+  transfer_date: 2014-06-23 12:31:24
+  transferee: 1

@@ -1,0 +1,59 @@
+%h3 Devices Category Details
+%table.width-100
+  
+  %tr
+    %th
+      Name:
+    %td
+      = @device_category.name
+  %tr
+    %th
+      Description:
+    %td
+      = @device_category.description
+
+  %tr
+    %th
+      Parent Category:
+    %td
+      = format_value(@device_category.parent.try(:name))
+
+- @devices = @device_category.devices.active
+- @sws = @device_category.software_products.active
+- if @devices.present? 
+  %h3 Devices 
+  .tbl_device
+    %table#data_table.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th Name
+          %th Serial Number
+          %th Model Number
+          %th Status
+      %tbody
+        - @devices.each do |device|
+          %tr
+            %td= link_to device.device_identifier, device
+            %td= device.serial_number
+            %td= device.model_number
+            %td= device.status.capitalize        
+- if @sws.present? 
+  %h3 Softwares
+  .tbl_software
+    %table#device_category_software_data_tables.table.table-striped.table-bordered
+      %thead
+        %tr
+          %th Name
+          %th Version
+          %th Licence
+          %th Licence Number
+      %tbody
+        -  @sws.each do |device|
+          %tr
+            %td= link_to device.name, device
+            %td= device.version
+            %td= device.license == true ? "Yes" : "No"
+            %td= format_value(device.license_no)
+%br
+= link_to '<span class="glyphicon glyphicon-pencil "></span> Edit'.html_safe, edit_device_category_path(@device_category), class: "btn btn-success" if @device_category.active?
+= link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, device_categories_path, class: "btn btn-primary"

@@ -1,0 +1,62 @@
+%h3 Quotation Details
+
+%table.width-100
+  %tr
+    %th
+      Identifier:
+    %td
+      = @quotation.identifier
+  %tr
+    %th
+      Date:
+    %td
+      = @quotation.on_date.try(:to_s, "%b %d, %Y")
+  %tr
+    %th
+      Device Request:
+    %td
+      = @quotation.device_request.try(&:identifier)
+  %tr
+    %th
+      Vendor:
+    %td
+      = @quotation.device_transactions.first.vendor.try(:name)
+  %tr
+    %th 
+      Attchment:
+    %td
+      = link_to "#{@quotation.uploads.try(:first).try(:attachment_file_name)}", download_path(id: @quotation.uploads.try(:first).try(:id))
+%br
+%table#search_data_table.table.table-striped.table-bordered
+  %thead
+    %th Device Category
+    %th Title
+    %th Description
+    %th Quantity
+    %th 
+      Price
+      %small (per unit)
+    %th Total
+  %tbody
+    - total = 0
+    - @quotation.device_transactions.each do |t|
+      %tr
+        %td= t.device_category.try(:name)
+        %td= t.quotation_title
+        %td= t.quotation_description
+        %td= t.quotation_quantity
+        %td= t.quotation_price
+        %td.text-right
+          %b
+            = t.quotation_subtotal
+            - total += t.quotation_subtotal
+  %tr
+    %td
+      %b Total
+    %td.text-right{colspan: 5}
+      %b
+        = total
+%br
+- if @quotation.edit?
+  = link_to '<span class="glyphicon glyphicon-pencil "></span> Edit'.html_safe, edit_quotation_path(@quotation), class: "btn btn-success"
+= link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, quotations_path, class: "btn btn-primary"

@@ -1,0 +1,4 @@
+.col-md-5
+  = f.text_field :serial_number, data: { 'rule-uniqueSerial' =>true, 'rule-required' => true, 'msg-maxlength' => "Maximum 35 characters", title: "Maximum 35 characters" }, label: "Serial Number<span class='required'/>".html_safe, class: "input_tooltip", maxlength: 35
+.col-md-5
+  = f.text_field :model_number, data: { 'rule-required' => true, 'msg-maxlength' => "Maximum 35 characters", title: "Maximum 35 characters" }, label: "Model Number<span class='required'/>".html_safe, class: "input_tooltip", maxlength: 35

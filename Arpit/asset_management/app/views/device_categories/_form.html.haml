@@ -1,0 +1,8 @@
+= bootstrap_form_for @device_category, layout: :horizontal, control_col: "col-sm-3", html: { class: 'validate-form' } do |f|
+  = f.text_field :name, data: { 'rule-required' => true, 'rule-maxlength' => 35, 'msg-maxlength' => "Maximum 35 characters", title: "Maximum 35 characters", 'rule-validName' => true }, class: "input_tooltip", label: "Name <span class='required'/>".html_safe, maxlength: 35
+  = f.text_area :description, data: { 'rule-required' => true, 'rule-validDescription' => true }, label: "Description <span class='required'/>".html_safe
+  = f.select :parent_id, DeviceCategory.parent_device_categories(@device_category).map{ |s| [s.name, s.id] }, include_blank: 'Select Parent Category', label: "Parent Category"
+  = f.button(type: 'submit', class: "btn btn-success") do
+    %i{ class: "glyphicon glyphicon-ok" }
+    Save
+  = link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, device_categories_path, class: "btn btn-primary"

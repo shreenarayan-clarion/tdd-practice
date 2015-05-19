@@ -1,0 +1,24 @@
+%html
+  %head
+    %title= t "page_title.#{controller_name}.#{action_name}"
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+
+    = render 'layouts/header'
+
+    - if notice
+      %p.alert.alert-success
+        %span.close-icon.glyphicon.glyphicon-remove-circle
+        = notice
+    - if alert
+      %p.alert.alert-danger
+        %span.close-icon.glyphicon.glyphicon-remove-circle
+        = alert
+
+    .container
+      = yield
+
+    = render 'layouts/footer'
+

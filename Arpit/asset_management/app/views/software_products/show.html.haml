@@ -1,0 +1,45 @@
+%h3 Software Details
+
+%table.width-100
+  %tr
+    %th
+      Name:
+    %td
+      = @software_product.name
+
+  %tr
+    %th
+      Device Category:
+    %td
+      = @software_product.device_category.try(:name)
+  %tr
+    %th
+      Version:
+    %td
+      = @software_product.version
+  %tr
+    %th
+      License:
+    %td
+      = @software_product.license == true ? "Yes" : "No"
+  %tr
+    -if @software_product.license == true
+      %th
+        License Number:
+      %td
+        = format_value(@software_product.license_no)
+  %tr
+    %th
+      Purchase Date:
+    %td
+      / = debug(@software_product)
+      = format_value(@software_product.purchase_date.try(:strftime,"%b %d, %Y"))
+  %tr
+    %th
+      Description:
+    %td
+      = format_value(@software_product.description)
+
+%br
+= link_to '<span class="glyphicon glyphicon-pencil "></span> Edit'.html_safe, edit_software_product_path(@software_product), class: "btn btn-success" if @software_product.active?
+= link_to '<span class="glyphicon glyphicon-arrow-left"></span> Back'.html_safe, software_products_path, class: "btn btn-primary"

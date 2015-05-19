@@ -1,0 +1,30 @@
+%h3 Quotations
+
+%table#data_table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Identifier
+      %th Device Request
+      %th Title
+      %th Device Category
+      %th Vendor
+      %th Date
+      = actions_th
+
+  %tbody
+    - @quotations.each do |quotation|
+      %tr
+        %td= link_to quotation.identifier, quotation_path(quotation.id)
+        %td= link_to quotation.device_request.identifier, device_request_path(quotation.device_request.id)
+        %td= quotation.device_transactions.map(&:quotation_title).uniq.join(', ')
+        %td= quotation.device_transactions.map(&:device_category).compact.map(&:name).uniq.join(', ')
+        %td= quotation.device_transactions.first.try(:vendor).try(:name)
+        %td= quotation.on_date.try(:strftime,"%b %d, %Y")
+        %td.text-center
+          = link_to '', quotation, class: "glyphicon glyphicon-eye-open show-link", title: "Show"
+          - if quotation.edit?
+            = link_to '', edit_quotation_path(quotation), class: "glyphicon glyphicon-pencil edit-link", title: "Edit"
+            = link_to '', quotation, :method => :delete, class: "glyphicon glyphicon-remove-circle delete-link", title: "Delete", :data => { :confirm => "Are you sure you want to delete: #{quotation.identifier}?" }
+
+%br
+= link_to '<span class="glyphicon glyphicon-plus-sign"></span> New'.html_safe, new_quotation_path, class: 'btn btn-primary'

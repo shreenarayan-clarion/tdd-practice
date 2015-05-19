@@ -1,0 +1,30 @@
+%h3 Invoices
+
+%table#data_table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th Identifier
+      %th Purchase Order
+      %th Title
+      %th Device Category
+      %th Vendor
+      %th Date
+      = deleted_on_th
+      = actions_th
+    %tbody
+      - @invoices.each do |invoice|
+        %tr
+          %td= link_to invoice.identifier, invoice
+          %td= link_to invoice.purchase_order.identifier , invoice.purchase_order
+          %td= invoice.device_transactions.map(&:invoice_title).uniq.join(', ')
+          %td= invoice.device_transactions.map(&:device_category).compact.map(&:name).uniq.join(', ')
+          %td= invoice.device_transactions.map(&:vendor).compact.map(&:name).uniq.join(', ')
+          %td= invoice.on_date.to_s("%b %d, %Y")
+          %td.text-center
+            = link_to '', invoice , class: "glyphicon glyphicon-eye-open show-link", title: "Show"
+            = link_to '', edit_invoice_path(invoice), class: "glyphicon glyphicon-pencil edit-link", title: "Edit"
+            = link_to '', invoice, :method => :delete, :data => { :confirm => "Are you sure you want to delete invoice: #{invoice.identifier}?" }, class: "glyphicon glyphicon-remove-circle delete-link"
+
+%br
+
+= link_to '<span class="glyphicon glyphicon-plus-sign"></span> New'.html_safe, new_invoice_path, class: 'btn btn-primary'
