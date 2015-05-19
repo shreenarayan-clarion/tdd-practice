@@ -1,0 +1,39 @@
+.row
+  .col-md-6 
+    %h1 Listing Product Component
+  .col-md-6
+    .pull-right.invite_btn
+      - if policy(Product).create?
+        = link_to('Add Component', new_product_product_comp_path(@product), class: 'btn btn-default')
+:ruby
+  data = grid(@product_comps, show_filters: :no) do |g|
+    g.blank_slate  do
+      "There are no records"
+    end
+    g.column name: 'ID', attribute: 'id' do |task|
+      task.id
+    end
+    g.column name: 'Image', attribute: 'image' do |task|
+      image_tag task.image, class: 'product-image'
+    end
+    g.column name: 'Name', attribute: 'name' do |task|
+      link_to "#{task.name.blank? ? '---' : task.name}", product_product_images_path(task)
+    end
+    g.column name: 'Description', attribute: 'description' do |task|
+      task.description
+    end
+    g.column name: 'Created By', attribute: 'admin_id' do |task|
+      task.admin.try(:name)
+    end
+    g.column name: 'Created At', attribute: 'created_at' do |task|
+      date_format(task.created_at)
+    end
+    if current_admin.role == 'super_admin'
+      g.column name: 'Option' do |task|
+        "#{link_to('Edit', edit_product_product_comp_path(@product, task))} | 
+        #{link_to('Delete', product_product_comp_path(@product, task), method: 'delete', data: {confirm:'Are you sure?'})}
+        ".html_safe
+      end
+    end
+  end
+= data

@@ -1,0 +1,31 @@
+.row
+  .col-md-6 
+    %h1 Listing Category
+  .col-md-6
+    .pull-right.invite_btn
+      - if policy(Category).create?
+        = link_to 'Add Category', new_category_path(), class: 'btn btn-default'
+:ruby
+  data = grid(@categories, show_filters: :no) do |g|
+    g.blank_slate  do
+      "There are no records"
+    end
+    g.column name: 'ID', attribute: 'id' do |task|
+      task.id
+    end
+    g.column name: 'Name', attribute: 'name' do |task|
+      link_to task.name, task
+    end
+    g.column name: 'Created By', attribute: 'admin_id' do |task|
+      task.admin.try(:name)
+    end
+    g.column name: 'Created At', attribute: 'created_at' do |task|
+      date_format(task.created_at)
+    end
+    if current_admin.role == 'super_admin'
+      g.column name: 'Option' do |task|
+        "#{link_to('Edit', edit_category_path(task))} | #{link_to('Delete', category_path(task), method: 'delete', data: {confirm:'Are you sure?'})}".html_safe
+      end
+    end
+  end
+= data

@@ -1,0 +1,30 @@
+%p#notice= notice
+
+%p
+  %b Id:
+  = @product.id
+%p
+  %b Shopify product:
+  = @product.shopify_product_id
+%p
+  %b Name:
+  = @product.name
+%p
+  %b Base price:
+  = @product.base_price
+%p
+  %b Image:
+  = @product.image
+%p
+  %b Description:
+  = @product.description
+%p
+  %b Active:
+  = @product.active
+%p
+  %b Admin:
+  = @product.admin_id
+
+= link_to 'Edit', edit_product_path(@product)
+\|
+= link_to 'Back', products_path
