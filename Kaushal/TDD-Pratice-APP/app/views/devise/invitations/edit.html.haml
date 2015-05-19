@@ -1,0 +1,9 @@
+%h2
+  = t 'devise.invitations.edit.header'
+= bootstrap_form_for(resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:class => 'form-horizontal', method: :put}, layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-3") do |f|
+  = f.hidden_field :invitation_token
+  = f.text_field :name
+  = f.password_field :password
+  = f.password_field :password_confirmation
+  = f.submit t("devise.invitations.edit.submit_button"), class: 'btn btn-primary', data: {disable_with: t("devise.invitations.edit.submit_button")}
+

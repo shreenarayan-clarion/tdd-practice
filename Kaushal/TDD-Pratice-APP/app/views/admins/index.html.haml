@@ -1,0 +1,39 @@
+.row
+  .col-md-6 
+    %h1 Listing Admin
+  .col-md-6
+    .pull-right.invite_btn
+      - if policy(Admin).create?
+        = link_to 'Invite User', new_admin_invitation_path(), class: 'btn btn-default'
+:ruby
+  data = grid(@admins, show_filters: :no) do |g|
+    g.blank_slate  do
+      "There are no records"
+    end
+    g.column name: 'ID', attribute: 'id' do |task|
+      task.id
+    end
+    g.column name: 'Name', attribute: 'name' do |task|
+      task.name.blank? ? '---' : task.name
+    end
+    g.column name: 'Email', attribute: 'email' do |task|
+      task.email
+    end
+    g.column name: 'Created By', attribute: 'created_by_id' do |task|
+      task.invited_by.try(:name)
+    end
+    g.column name: 'Created At', attribute: 'created_at' do |task|
+      date_format(task.invitation_created_at)
+    end
+    g.column name: 'Active', attribute: 'confirmed_at' do |task|
+      (task.confirmed_at.blank? ? 'No' : 'Yes')
+    end
+    if policy(Admin).update?
+      g.column name: 'Option' do |task|
+        if policy(task).update?
+            "#{link_to('Edit', edit_admin_path(task))} | #{link_to('Delete', admin_path(task), method: 'delete', data: {confirm:'Are you sure?'})}".html_safe
+        end
+      end
+    end
+  end
+= data
