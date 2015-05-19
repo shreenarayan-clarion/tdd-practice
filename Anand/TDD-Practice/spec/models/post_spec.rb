@@ -12,14 +12,14 @@ describe Post do
   it { is_expected.to validate_length_of(:content).is_at_most(250) }
 
   describe "creation" do
-    context "valid attributes" do
+    context "with valid attributes" do
       it "should be valid" do
         post = FactoryGirl.build(:post)
         post.should be_valid
       end
     end
 
-    context "invalid attributes" do
+    context "with invalid attributes" do
       it "should not be valid" do
         post = FactoryGirl.build(:post, title: "", content: "")
         post.should_not be_valid

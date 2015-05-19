@@ -20,9 +20,14 @@ RSpec.describe UsersController  do
 
   describe "GET #new" do
 
+    before { get :new }
+
     it "create a new instance of User" do
-      get :new
       expect(assigns(:user)).to be_instance_of(User)
+    end
+
+    it "render the :new template" do
+      expect(response).to render_template :new
     end
 
   end
@@ -44,6 +49,7 @@ RSpec.describe UsersController  do
     end
 
     context "With invalid attributes" do
+
       before { @invalid_user = attributes_for(:invalid_user) }
 
       it "will not create a new user" do
