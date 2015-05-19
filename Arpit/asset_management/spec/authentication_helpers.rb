@@ -1,10 +1,5 @@
-require 'rails_helper'
-
-RSpec.describe "Execute Login only", :type => :request do
-  before(:all) do
-    user = FactoryGirl.create(:user)
-  end
-  it "displays the user's email after successful login" do
+module AuthenticationHelpers
+  def login(user)
     visit '/users/sign_in'
     within("#new_user") do
       fill_in 'user_email', :with => 'parth@example.com'
