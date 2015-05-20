@@ -8,6 +8,17 @@
 </head>
 <body>
 
+  <div id="flash">
+    <% if flash[:notice] %>
+      <!-- <h4 class="info_box"><%#= flash[:notice] %></h3> -->
+      <p id="notice"><%= notice %></p>
+    <% end %>
+    <% if flash[:error] %>
+      <!-- <h4 class="error_box"><%#= flash[:error] %></h3> -->
+      <p id="error"><%= error %></p>
+    <% end %>
+  </div>
+
 <%= yield %>
 
 </body>
