@@ -1,4 +1,6 @@
 <p id="notice"><%= notice %></p>
+<h3>Title: <%= @post.title %></h3>
+<h3>Content: <%= @post.content %></h3>
 
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>
