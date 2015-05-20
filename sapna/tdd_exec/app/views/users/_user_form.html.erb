@@ -1,0 +1,25 @@
+<%= bootstrap_form_for @user, layout: :horizontal do |f| %>
+  <table>
+    <tr>
+      <td>
+        <%= f.text_field :name, maxlength: 35 %>
+      </td>    
+    </tr>
+     <tr>
+      <td>
+        <%= f.email_field :email %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= f.password_field :password%>
+      </td>
+    </tr>  
+  </table>
+  <div class="action">
+    <%= f.button(type: 'submit') do %>      
+      Save
+    <% end %>
+    <%= link_to 'Back', users_path %>
+  </div>
+<% end %>
