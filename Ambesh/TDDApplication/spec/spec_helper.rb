@@ -1,7 +1,12 @@
+require 'simplecov'
+SimpleCov.start
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'capybara/rails'
+require 'capybara/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -17,6 +22,25 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+
+  # database cleaner gem configuration
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+
+  #configuration to use the shorthand methods of factorygirl
+  #like create instead of FactoryGirl.create
+  config.include FactoryGirl::Syntax::Methods
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -31,7 +55,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
@@ -60,4 +84,5 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.fuubar_progress_bar_options = { :format => 'Ambesh Kumar! <%B> %p%% %a' }
+  Capybara.default_driver = :selenium
 end

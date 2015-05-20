@@ -52,6 +52,8 @@ group :development, :test do
   gem 'launchy'
   gem 'simplecov', :require => false
   gem 'fuubar'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 gem 'devise'

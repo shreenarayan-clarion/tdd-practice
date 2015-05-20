@@ -26,19 +26,12 @@ describe User do
   end
 
 	describe "Validations" do
-	  it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:email) }
 	  it { should ensure_length_of(:name).on(:update).is_at_most(50) }
-	  it { should validate_presence_of(:address) }
-	  it { should validate_presence_of(:contact_no) }
   end
 
   describe "Association" do
     it { should have_many(:posts) }
-  end
-
-  context "when name is not present" do
-    before { @user.name = " " }
-    it { should_not be_valid }
   end
 
   context "when name is too long" do
