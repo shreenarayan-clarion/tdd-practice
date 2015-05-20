@@ -19,7 +19,7 @@ describe Post do
 	  it { should validate_presence_of(:title) }
 	  it { should ensure_length_of(:title).is_at_least(5) }
 	  it { should validate_presence_of(:content) }
-	  it { should ensure_length_of(:content).is_at_least(150) }
+	  it { should ensure_length_of(:content).is_at_least(10) }
   end
 
   describe "creation" do
@@ -32,7 +32,7 @@ describe Post do
 
     context "invalid attributes" do
       it "should not be valid" do
-        post = FactoryGirl.build(:post, title: "")
+        post = FactoryGirl.build(:invalid_post)
         post.should_not be_valid
       end
     end
