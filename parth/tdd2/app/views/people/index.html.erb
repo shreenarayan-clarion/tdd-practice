@@ -5,9 +5,7 @@
     <tr>
       <th>Name</th>
       <th>Email</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Action</th>
     </tr>
   </thead>
 
@@ -16,9 +14,9 @@
       <tr>
         <td><%= person.name %></td>
         <td><%= person.email %></td>
-        <td><%= link_to 'Show', person %></td>
-        <td><%= link_to 'Edit', edit_person_path(person) %></td>
-        <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', person %>
+        <%= link_to 'Edit', edit_person_path(person) %>
+        <%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

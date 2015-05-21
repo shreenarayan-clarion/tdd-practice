@@ -37,17 +37,4 @@ describe Person do
     should respond_to(:email)
   end
 
-  # Person with multiple posts
-  it "should have posts when created with factory" do
-    # person = create(:person)
-
-    # puts person.inspect
-    # puts person.posts.count
-
-    person_with_posts = create(:person_with_posts)
-
-    puts person_with_posts.inspect
-    # puts person_with_posts.posts.inspect
-  end
-
 end
