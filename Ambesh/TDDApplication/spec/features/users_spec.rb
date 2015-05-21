@@ -1,30 +1,30 @@
 require 'spec_helper'
 
-# feature "Regestration", type: :features do
+feature "Regestration", type: :features do
 
-#   background do
-#     visit "/"
-#     click_link "Registration"
-#   end
+  background do
+    visit "/"
+    click_link "Registration"
+  end
   
-#   it "regestration with valid data" do
-#     within('.new_user') do
-#       fill_in "user_email", with: Faker::Internet.email
-#       fill_in "user_password", with: "password"
-#       fill_in "user_password_confirmation", with: "password"
-#     end
-#     click_button "Sign up"
-#     expect(page).to have_text("Welcome! You have signed up successfully.")
-#   end
+  it "regestration with valid data" do
+    within('.new_user') do
+      fill_in "user_email", with: Faker::Internet.email
+      fill_in "user_password", with: "password"
+      fill_in "user_password_confirmation", with: "password"
+    end
+    click_button "Sign up"
+    expect(page).to have_text("Welcome! You have signed up successfully.")
+  end
 
-#   it "regestration with invalid data" do
-#     within('.new_user') do
-#       fill_in "user_email", with: Faker::Internet.email
-#     end
-#     click_button "Sign up"
-#     expect(page).to have_text("Password can't be blank")
-#   end
-# end
+  it "regestration with invalid data" do
+    within('.new_user') do
+      fill_in "user_email", with: Faker::Internet.email
+    end
+    click_button "Sign up"
+    expect(page).to have_text("Password can't be blank")
+  end
+end
 
 feature "Regestration", type: :features do
   
