@@ -1,0 +1,15 @@
+default: &default
+  adapter: mysql2
+  host: localhost
+  encoding: utf8 
+  pool: 5
+  username: root
+  password: root
+
+development:
+  <<: *default
+  database: bdd_dev
+
+test:
+  <<: *default
+  database: bdd_test
