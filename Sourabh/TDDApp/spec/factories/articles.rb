@@ -1,8 +1,8 @@
 FactoryGirl.define do
-	
+
   factory :article do
-    title "MyString"
-		content "MyText MyText"
-  end
+    title "Sourabhkamble"
+		content Faker::Name.content 
+		  end
 
 end
