@@ -1,14 +1,20 @@
 require 'rails_helper'
+require 'authentication_helpers'
 
-feature "Device Index" do
-  let(:user) { FactoryGirl.create(:user) }
+
+RSpec.describe "Devices listing", :type => :request do
+  include AuthenticationHelpers
+  before(:each) do
+    @current_user = FactoryGirl.create(:user) 
+    login(@current_user)
+  end
   let(:device) { FactoryGirl.create(:device) }
   let(:deactivated_device) { FactoryGirl.create(:deactivated_device)}
 
   scenario "logged in user access devices listing page" do
-    page.set_rack_session(user_id: user.id)
+    expect(page).to have_content 'parth@example.com'
     visit "/devices"
-    expect(page).to have_content("Hi, parth@example.com")
+    expect(page).to have_content ' Devices'
   end
 
   # it "displays list of devices" do

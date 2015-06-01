@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "home page", :type => :request do
+RSpec.describe "Execute Login only", :type => :request do
   before(:all) do
     user = FactoryGirl.create(:user)
   end

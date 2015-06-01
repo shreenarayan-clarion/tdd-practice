@@ -83,7 +83,6 @@
         null,
         null,
         null,
-        null,
         null
       ],
       "/home/anand/tdd-practice/Anand/TDD-Practice/config/initializers/assets.rb": [
@@ -636,6 +635,6 @@
         null
       ]
     },
-    "timestamp": 1432035058
+    "timestamp": 1432101406
   }
 }

@@ -1,0 +1,38 @@
+<!-- <p id="notice"><%= notice %></p> -->
+
+<p>
+  <strong>Name:</strong>
+  <%= @person.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @person.email %>
+</p>
+
+<% if @posts.present? %>
+  <p>
+    <strong>Posts:</strong><br />
+    <table class="people_posts">
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Action</th>
+      </tr>
+      <% @posts.each do |post| %>
+        <tr>
+          <td><%= post.title %></td>
+          <td><%= post.description %></td>
+          <td><%= link_to "Show", person_post_path(@person, post) %>
+          <%= link_to "Edit", edit_person_post_path(@person, post) %>
+          <%= link_to "Delete", person_post_path(@person, post), :method => :delete, data: { confirm: "Are you sure?" } %></td>
+        </tr>
+      <% end %>
+    </table>
+  </p>
+<% end %>
+
+
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %> |
+<%= link_to 'Create post', new_person_post_path(:person_id => @person) %>

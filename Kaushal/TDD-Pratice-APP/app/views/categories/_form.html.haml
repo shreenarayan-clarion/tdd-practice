@@ -1,0 +1,4 @@
+= bootstrap_form_for(@category, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-5") do |f|
+  = f.text_field :name, :autofocus => true
+  = f.submit 'Save', class: 'btn btn-default', data: {disable_with: 'Save'}
+  = link_to 'Back', categories_path, class: 'btn btn-default'

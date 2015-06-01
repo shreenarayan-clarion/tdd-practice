@@ -1,0 +1,9 @@
+.border-form-div.invite-form-div
+  %h2
+    = t "devise.invitations.new.header"
+  = bootstrap_form_for(resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:class => 'form-horizontal', method: :post}, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-5") do |f|
+    = f.hidden_field :created_by_id, value: current_admin.id
+    - resource.class.invite_key_fields.each do |field|
+      .form-inputs
+        = f.text_field field
+      = f.submit t("devise.invitations.new.submit_button"), class: 'btn btn-primary', data: {disable_with: t("devise.invitations.new.submit_button")}
